@@ -1,0 +1,139 @@
+## 5-28学习笔记
+#### `jQuery.extend( [deep ], target, object1 [, objectN ] )`
+* 将两个或更多对象的内容合并到第一个对象
+	* deep  
+	类型: Boolean  
+	不支持第一个参数传递`false`，如果是`true`，合并成为递归（又叫做深拷贝），留空则是非递归合并
+	* target  
+	类型: Object  
+	对象扩展。这将接收新的属性
+	* object1  
+	类型: Object  
+	一个对象，它包含额外的属性合并到第一个参数.
+	* objectN  
+	类型: Object  
+	包含额外的属性合并到第一个参数
+* 当提供两个或多个对象给`$.extend()`，对象的所有属性都添加到目标对象（target参数）
+* 如果只有一个参数提供给`$.extend()`，这意味着目标参数被省略。在这种情况下，jQuery对象本身被默认为目标对象。这样就可以在jQuery的命名空间下添加新的功能。
+* 目标对象（第一个参数）将被修改，并且将通过`$.extend()`返回。然而，如果我们想保留原对象，可以通过传递一个空对象作为目标对象：
+`var object = $.extend({}, object1, object2);`
+* 在默认情况下，通过`$.extend()`合并操作不是递归的；如果第一个对象的属性本身是一个对象或数组，那么它将完全用第二个对象相同的key重写一个属性。
+* Example: 合并两个对象，并修改第一个对象。
+```
+var object1 = {
+  apple: 0,
+  banana: {weight: 52, price: 100},
+  cherry: 97
+};
+var object2 = {
+  banana: {price: 200},
+  durian: 100
+};
+ 
+/* merge object2 into object1 */
+$.extend(object1, object2);
+ 
+console.log(JSON.stringify(object1));  //{"apple":0,"banana":{"price":200},"cherry":97,"durian":100}
+```
+* Example: 采用递归方式合并两个对象，并修改第一个对象。
+```
+var object1 = {
+  apple: 0,
+  banana: {weight: 52, price: 100},
+  cherry: 97
+};
+var object2 = {
+  banana: {price: 200},
+  durian: 100
+};
+ 
+/* merge object2 into object1, recursively */
+$.extend(true, object1, object2);
+
+console.log(JSON.stringify(object1));  //{"apple":0,"banana":{"weight":52,"price":200},"cherry":97,"durian":100}
+```
+* Example: 合并 defaults 和 options 对象，并且不修改 defaults 对象。这是常用的插件开发模式。
+```
+var defaults = { validate: false, limit: 5, name: "foo" };
+var options = { validate: true, name: "bar" };
+ 
+/* merge defaults and options, without modifying defaults */
+var settings = $.extend({}, defaults, options);
+ 
+$("#log").append( "<div><b>defaults -- </b>" + printObj(defaults) + "</div>" );
+$("#log").append( "<div><b>options -- </b>" + printObj(options) + "</div>" );
+$("#log").append( "<div><b>settings -- </b>" + printObj(settings) + "</div>" );
+ 
+console.log(JSON.stringify(defaults));   //{"validate":false,"limit":5,"name":"foo"}
+console.log(JSON.stringify(options));    //{"validate":true,"name":"bar"}
+console.log(JSON.stringify(settings));   //{"validate":true,"limit":5,"name":"bar"}
+```
+
+-----------
+
+#### `.serialize()`
+* 描述: 将用作提交的表单元素的值编译成字符串
+* 这个方法不接受任何参数，返回值为`String`
+* 如果一个表单元素的值要被序列化成字符串，这个元素必须含有 `name` 属性
+* 复选框`checkbox`和单选按钮`radio`(`input` 类型为 `radio` 或 `checkbox`)的值只有在被选中时才会被序列化。另外，文件选择元素的数据也不会被序列化
+* Example：把一个表单序列化成一个查询字符串，使之能够在一个Ajax请求中发送
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  body, select { font-size:12px; }
+  form { margin:5px; }
+  p { color:red; margin:5px; font-size:14px; }
+  b { color:blue; }
+  </style>
+  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+ 
+<form>
+  <select name="single">
+    <option>Single</option>
+    <option>Single2</option>
+  </select>
+ 
+  <br>
+  <select name="multiple" multiple="multiple">
+    <option selected="selected">Multiple</option>
+    <option>Multiple2</option>
+     <option selected="selected">Multiple3</option>
+  </select>
+
+  <br>
+  <input type="checkbox" name="check" value="check1" id="ch1">
+  <label for="ch1">check1</label>
+  <input type="checkbox" name="check" value="check2" checked="checked" id="ch2">
+  <label for="ch2">check2</label>
+
+  <br >
+  <input type="radio" name="radio" value="radio1" checked="checked" id="r1">
+  <label for="r1">radio1</label>
+  <input type="radio" name="radio" value="radio2" id="r2">
+  <label for="r2">radio2</label>
+</form>
+<p id="results"></p>
+<script>
+    function showValues() {
+      var str = $("form").serialize();
+      $("#results").text(str);
+    }
+    $(":checkbox, :radio").click(showValues);
+    $("select").change(showValues);
+    showValues();
+</script>
+ 
+</body>
+</html>
+```
+
+---------
+
+#### `.serializeArray()`
+* 描述: 将用作提交的表单元素的值编译成拥有`name`和`value`对象组成的数组。例如`[ { name: a value: 1 }, { name: b value: 2 },...]`
+* `.serializeArray()` 方法创建一个对象组成的javascript数组，用来编码成一个JSON一样的字符串
+* 其他属性与`serialize()`相似
