@@ -1,0 +1,124 @@
+## 5-26学习笔记
+### HTML5 自定义属性 `data-*` 和 `jQuery.data`方法
+#### 自定义属性及实例
+* HTML5标准允许在普通的元素标签里，嵌入类似`data-*`的自定义属性，来实现一些简单数据的存取。它的数量不受限制，并且也能由javascript动态修改，也支持CSS选择器进行样式设置。
+* HTML5 Dataset 存储的例子
+```
+<span id="music-latch" class="musique"
+data-date="2013"
+data-genre="Electronic"
+data-album="Settle (Deluxe)"
+data-artist="Disclosure"
+data-composer="Howard Lawrence & Guy Lawrence">
+Latch (feat. Sam Smith)
+</span>
+```
+```
+<h2 id="food-pkd" class="food"
+data-en="Peking Duck"
+data-available
+data-ja="北京ダック"
+data-fr="Canard laqué de Pékin"
+data-de="Pekingente">
+```
+
+#### 利用 `getAttribute`、`setAttribute` 存取 dataset
+* 作为HTML元素的标签，dataset的存取也服从getAttribute、setAttribute，而且这两个方法兼容性也最广
+```
+//get
+var album = document.getElementById("music-latch").getAttribute("data-album");
+console.log(album);  //Settle (Deluxe)
+
+//set
+document.getElementById("food-pkd").setAttribute("data-en","Beijing Stuffed Duck");
+```
+* `getAttribute`、`setAttribute`对 dataset 的任何更改，都会实时反映到元素data属性上
+
+#### 利用 dataset API 存取 dataset
+* `getAttribute`、`setAttribute`一次只能获取一个data属性，如果要获取全部属性并包装成对象的话，还得借助循环来实现。`dataset`则可以一次获取所有data字段，生成一个对象，方便存取和遍历
+```
+//get
+var songd = document.getElementById("music-latch").dataset;
+var album = songd.album;
+console.log(album);  //Settle (Deluxe)
+
+//set
+document.getElementById("food-pkd").dataset.en = "Beijing Stuffed Duck";
+
+//add
+document.getElementById("food-pkd").dataset.es = "Pato laqueado a la pekinesa";
+```
+* 如果涉及到连字符`-`，可以采取驼峰化的方法来存取
+```
+<span id="en" data-en-us="Peiking Duck"></span>
+
+// 其中en-us要写成enUs
+var en = document.getElementById("en").dataset.enUs;
+```
+
+#### 利用 `jQuery.attr` 方法存取 dataset
+* `jQuery.atrr()`方法对dataset做出的修改都是实时反映到元素的data属性上的
+```
+//get
+var album = $("#music-latch").attr("data-album");
+console.log(album);  //Settle (Deluxe)
+
+//set
+$("#food-pkd").attr("data-en","Beijing Stuffed Duck");
+```
+
+#### 利用 `jQuery.data` 方法存取 dataset
+* jQuery从1.4.2版本开始支持`$.data()`方法来直接访问`data`属性，同时也不需要写`data-`关键词
+```
+//get
+var album = $("#music-latch").data("album");
+console.log(album);
+
+//set
+$("#food-pkd").data("en","Beijing Stuffed Duck");
+```
+* 需要特别注意的是，`jQuery.data`对`data`数据做出的更改，**不会**反映到HTML元素`data`属性上。
+* 也就是说，jQuery现在认为`#food-pkd`元素的`data-en`为`"Beijing Stuffed Duck"`，但是在HTML元素上，其值还是没有改变，仍为`"Peking Duck"`
+```
+//set
+$("#food-pkd").data("en","Beijing Stuffed Duck");
+
+console.log( $("#food-pkd").data("en") );
+// log: "Beijing Stuffed Duck"
+
+console.log( document.getElementById("food-pkd").dataset.en );
+// log: "Peking Duck"
+```
+
+#### 使用`removeData()`移除元素`data`数据
+* 语法形式，`$(selector).removeData(dataName);`
+
+#### `jQuery.data` 解析 Dataset 的 JSON 信息
+* jQuery还可以很聪明的从`data`里提取出json信息转换为对象
+```
+<span id="song-jsn"
+data-meta='{"name":"Latch", "album":"Disclosure", "date":"2013"}'>
+Latch (feat. Sam Smith)
+</span>
+
+var jsn = $("#song-jsn").data("meta");
+console.log( jsn.album );
+// log: "Disclosure"
+```
+
+#### CSS、jQuery 查找 `data` 属性对应元素
+* CSS选择器可以使用HTML的`data`属性选择元素，Example：将所有专辑名`(data-album)`为`Disclosure`的歌曲名显示为红色
+```
+.musique[data-album='Disclosure']
+{
+color:red;
+}
+```
+* jQuery选择器也可以使用HTML的`data`属性，Example：将所有的现在可订购的食物在点击后弹出对话窗，在jQuery里，也可以通过中括号`[]`用以下方式去轻松匹配
+```
+$(".food").filter("[data-available]").each(function(){
+	$(this).click(function(){
+		alert("It's Available!");
+	});
+});
+```

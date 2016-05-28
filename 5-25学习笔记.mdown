@@ -1,0 +1,128 @@
+## 5-25学习笔记
+#### `.get([index])`  
+* 描述: 通过jQuery对象获取一个对应的DOM元素。
+* index
+	* 类型: Number
+	* 从0开始计数，用来确定获取哪个元素。
+* `.get()` 方法允许我们直接访问jQuery对象中隐含的DOM节点
+
+-----
+
+#### `.toArray()`
+* 描述: 返回一个包含jQuery对象集合中的所有DOM元素的数组。
+* 这个方法不接受任何参数。
+* `.toArray()` 返回jQuery集合中所有元素：
+	* `alert($('li').toArray());`
+	* 所有匹配的DOM节点都会包含在一个标准的数组中：
+	* `[<li id="foo">foo</li>, <li id="bar">bar</li>]`
+
+--------
+
+#### `jQuery.makeArray( obj )`
+* 描述: 转换一个类似数组的对象成为真正的JavaScript数组。
+* 一般来说，无论是在jQuery和JavaScript中很多方法都返回类似数组的对象。举例来说，jQuery的代理函数`$()`返回一个jQuery对象具有许多的数组的属性。（`length`，`[]`数组访问运算符等），但和数组并不完全一样，缺少一些对数组的内置方法（如`.pop()`和`.reverse()`）。
+* 转换后，任何有特殊功能的对象（如在我们的例子中jQuery方法）将不再存在。现在的对象是一个普通的数组。
+
+-----
+
+#### `innerHTML`属性
+* `innerHTML` 属性设置或返回元素的 inner HTML
+* 设置元素的innerHTML：`HTMLElementObject.innerHTML = text`
+* 返回元素的innerHTML：`text = HTMLElementObject.innerHTML`
+```
+function disp(divs) {
+  var a = [];
+  for (var i = 0; i < divs.length; i++) {
+    a.push(divs[i].innerHTML);
+  }
+  $("span").text(a.join(" "));
+}
+
+disp($('div').makeArray());
+```
+
+------
+
+#### `index()`
+	 描述: 从匹配的元素中搜索给定元素的索引值，从0开始计数。  
+* `.index()`：这个方法**不接受**任何参数，返回值为jQuery对象中第一个元素相对于它**同辈**元素的位置  
+Example: 返回ID为`bar`的元素相对于同辈的索引值。
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <style>div { font-weight: bold; color: #090; }</style>
+  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+  <ul>
+  <li id="foo">foo</li>
+  <li id="bar">bar</li>
+  <li id="baz">baz</li>
+</ul>
+<div></div>
+<script>var barIndex = $('#bar').index();
+$('div').html( 'Index: ' +  barIndex );</script>
+ 
+</body>
+</html>
+
+// result Index: 1
+```
+* `.index( selector )`：参数是一个**选择器**，代表一个jQuery对象，将会从这个对象中查找元素。`.index()` 返回值就是原先元素相对于选择器匹配元素的位置。如果找不到匹配的元素，则 `.index()` 返回 `-1`  
+Example: 返回ID为`bar`的元素相对于所有 `<li>` 元素的索引值。
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <style>div { font-weight: bold; color: #090; }</style>
+  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+  <ul>
+  <li id="foo">foo</li>
+  <li id="bar">bar</li>
+  <li id="baz">baz</li>
+</ul>
+<div></div>
+<script>$('div').html('Index: ' +  $('#bar').index('li') );</script>
+ 
+</body>
+</html>
+
+// result Index: 1
+```
+* `.index( element )`：参数为将要用于查找的DOM元素，或者jQuery对象中的第一个元素。在一组元素上调用 `.index()` ，并且参数是一个**DOM元素**或**jQuery对象**， `.index()` 返回值就是传入的元素相对于原先集合的位置。  
+Example: 返回ID为bar的元素的索引值。
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <style>div { font-weight: bold; color: #090; }</style>
+  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+  <ul>
+  <li id="foo">foo</li>
+  <li id="bar">bar</li>
+  <li id="baz">baz</li>
+</ul>
+<div></div>
+<script>var listItem = $('#bar');
+    $('div').html( 'Index: ' + $('li').index(listItem) );</script>
+ 
+</body>
+</html>
+
+// result Index: 1
+```
+
+------
+
+#### `.length`
+* 描述: 在jQuery对象中元素的数量。
+```
+$('#get-length').click(function(){
+	alert('length = ' + $('p').length);
+});
+```

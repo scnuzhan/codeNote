@@ -1,0 +1,212 @@
+## 5-24学习笔记`$.each()`、`$.map()`、`$.grep()`
+
+### 一、`$.each()`
+####`jQuery.each( collection, callback(indexInArray, valueOfElement) )`
+* 描述: 一个通用的迭代函数，可以用来迭代**对象**和**数组**。数组和类似数组的对象通过一个**长度属性**来迭代数字索引，从**`0`**到**`length - 1`**。其他对象通过其**属性名**进行迭代。
+* **collection**  
+> * 类型: Object  
+> * 遍历的对象或数组。
+
+* **callback(indexInArray, valueOfElement)**  
+> * 类型: Function()  
+> * 该函数会在每次迭代时被调用。
+
+* `$.each()`函数可用于迭代任何集合，无论是“名/值”对象（JavaScript对象）或数组。在迭代数组的情况下，回调函数每次传递一个数组索引和相应的数组值作为参数。（该值也可以通过访问`this`关键字得到，但是JavaScript将始终将`this`值作为一个`Object` ，即使它是一个简单的字符串或数字值。）该方法返回其第一个参数，这是迭代的对象。
+```
+$.each([52, 97], function(index, value) {
+  alert(index + ': ' + value);
+});
+
+// 0: 52 
+// 1: 97
+```
+* 如果对象是作为集合使用，回调函数每次传递一个键值对
+```
+var obj = {
+  "flammable": "inflammable",
+  "duh": "no duh"
+};
+$.each( obj, function( key, value ) {
+  alert( key + ": " + value );
+});
+
+// flammable: inflammable 
+// duh: no duh
+```
+
+-------
+
+### 二、`$.map()`
+#### `jQuery.map( arrayOrObject, callback( value, indexOrKey ) )`
+* 描述: 将一个数组中的所有元素转换到另一个数组中。
+* `arrayOrObject`  
+> * 类型: Array,Object  
+> * 待转换数组或对象。
+
+* `callback( value, indexOrKey )`  
+> * 类型: Function()  
+> * 处理每一个元素的函数。第一个参数是数组中**元素**或对象的**值**，第二个参数是该元素在数组中的**索引值**或该对象的**键**。该函数可以返回**任何值**，该返回值会被添加到数组中。若返回是**数组**，则会将该数组中的**元素**添加到最终的结果数组中。在函数内部， `this`指的是`window`的对象。  
+* callback函数可以返回：  
+	* 转换后的值，该值会被映射到最终的结果数组中  
+	* `null`或者`undefined`, 用于移除该元素  
+	* **数组**，会将该数组中的元素添加到最终的结果数组中
+* 如果你希望处理一个**jQuery对象**——例如，`$('div').map( callback )`; —— 使用 `.map()` 代替
+* 类似数组的对象——那些有一个`.length`属性和一个`.length - 1` 的所引值- 必须被转换为实际的数组，然后被传递到`$.map()`。 jQuery库提供`$.makeArray()` 这样的转换。
+* Example: 将原始数组中的每个值加 4 后，映射到新的数组中。
+```
+var arr = $.map( [0,1,2], function(n){
+  return n + 4;
+});
+
+console.log(arr); //[4, 5, 6]
+```
+* Example: 将原始数组中每个值及该值加 1 后的值作为返回结果，映射到新生成的数组中。
+```
+var arr = $.map( [0,1,2], function(n){
+    return [ n, n + 1 ];
+});
+
+console.log(arr); //[0, 1, 1, 2, 2, 3] 
+```
+* Example: 将对象中的键映射到新生成的数组中。
+```
+var dimensions = { width: 10, height: 15, length: 20 };
+var keys = $.map( dimensions, function( value, key ) {
+  return key;
+}); 
+
+keys //["width", "height", "length"] 
+```
+* Example: 在处理函数中，通过返回 null 的方式来移除该元素。移除条件是该值小于 50。同时将未被移除的元素值减小 45。
+```
+var arr = $.map( [0, 1, 52, 97], function (a) {
+  return (a > 50 ? a - 45 : null);
+});
+
+console.log(arr); //[7, 52] 
+```
+* Example: 通过在处理函数中返回数组的方式，在最终返回的结果数组中添加元素。
+```
+var array = [0, 1, 52, 97];
+array = $.map(array, function(a, index) {
+  return [a - 45, index];
+}); 
+
+console.log(array); //[-45, 0, -44, 1, 7, 2, 52, 3] 
+```
+
+------
+
+### 三、`$.grep()`
+#### `jQuery.grep( array, function(elementOfArray, indexInArray) [, invert ] )`
+* 描述: 查找满足过滤函数的数组元素。原始数组不受影响。
+* `array`  
+> * 类型: Array  
+> * 用于查询元素的数组。
+
+* `function(elementOfArray, indexInArray)`  
+> * 类型: Function()  
+> * 该函数来处理每项元素的比对。第一个参数是正在被检查的数组的元素，第二个参数是该元素的索引值。该函数应返回一个布尔值,只有当测试返回true，该数组元素将返回到结果数组中。this将是全局的window对象。
+
+* `invert`  
+> * 类型: Boolean  
+> * 如果“invert”为false，或没有提供，函数返回一个“callback”中返回true的所有元素组成的数组，。如果“invert”为true，函数返回一个“callback”中返回false的所有元素组成的数组。
+* Example: 过滤出数组中值大于 0 的元素。
+```
+var arr = $.grep( [0,1,2], function(n,i){
+   return n > 0;
+ });
+
+ console.log(arr); //[1, 2]
+```
+* Example: 过滤出数组中值不大于 0 的元素。
+```
+var arr = $.grep( [0,1,2], function(n,i){
+    return n > 0;
+},true);
+
+console.log(arr); //[0]
+```
+
+-------
+
+### 四、` $(selector).each()`
+#### `.each( function(index, Element) )`
+* 描述: 遍历一个jQuery对象，为每个匹配元素执行一个函数。
+* `function(index, Element)`
+> * 类型: Function()
+> * 为每个匹配元素执行的一个函数。
+
+* $.each()函数可用于迭代任何集合，无论是“名/值”对象（JavaScript对象）或数组，而` $(selector).each()`专门用来遍历**jQuery对象**
+* `.each()` 方法用来让DOM循环结构更简单更不易出错。它会迭代jQuery对象中的每一个DOM元素。每次回调函数执行时，会传递当前循环次数作为参数(从0开始计数)。更重要的是，回调函数是在当前DOM元素为上下文的语境中触发的。因此关键字 `this` 总是指向这个元素。
+* Example: 遍历三个div并设置它们的color属性。
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  div { color:red; text-align:center; cursor:pointer;
+        font-weight:bolder; width:300px; }
+  </style>
+  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+  <div>Click here</div>
+  <div>to iterate through</div>
+  <div>these divs.</div>
+<script>
+    $(document.body).click(function () {
+      $( "div" ).each(function (i) {
+        if ( this.style.color != "blue" ) {
+          this.style.color = "blue";
+        } else {
+          this.style.color = "";
+        }
+      });
+    });
+</script>
+</body>
+</html>
+```
+
+------
+
+### 五、`.map()`
+#### `.map( callback(index, domElement) )`
+* 描述: 通过一个函数匹配当前集合中的每个元素,产生一个包含新的jQuery对象。
+* `callback(index, domElement)`
+> * 类型: Function()
+> * 一个函数对象，会在处理集合中的每个元素时被调用。
+
+* 如果要处理一个简单的数组或对象中，使用`jQuery.map()`代替。
+* 由于返回值是一个jQuery包裹的数组，所以通常会使用`get()`方法将其转换成普通的数组。
+* `.map()`方法特别适用于获取或设置元素集合中的值。
+* 在回调函数中，`this`指向每次迭代中的当前DOM元素。该函数可以返回一个单独的数据或数据数组，并在结果集合中插入。如果数组返回，数组中的元素插入到集合。如果函数返回`null`或`undefined` ，没有元素将被插入。
+* Example: 获取表单中所有表单元素的值，结果为：`Values: John, password, http://ejohn.org/`
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  p { color:red; }
+  </style>
+  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+  <p><b>Values: </b></p>
+  <form>
+    <input type="text" name="name" value="John"/>
+ 
+    <input type="text" name="password" value="password"/>
+    <input type="text" name="url" value="http://ejohn.org/"/>
+ 
+  </form>
+<script>
+    $("p").append( $("input").map(function(){
+      return $(this).val();
+    }).get().join(", ") );
+</script>
+ 
+</body>
+</html>
+```

@@ -1,0 +1,191 @@
+## 5-17学习笔记jQuery
+
+#### jQuery基础
+* jQuery
+```
+$(document).ready(function() {
+	...
+});
+```
+* 点击事件
+```
+$('#myid').click(function() {
+	...
+})
+```
+* `prepend()`方法：在被选元素的开头（仍位于内部）插入指定内容
+> `$(selector).prepend(content)`
+* `append()`方法：在被选元素的结尾（仍然在内部）插入指定内容
+> `$(selector).append(content)`
+* 数组对象中的字符串需用单引号或者双引号括起来，否则会被当作是变量处理，`var arr = [1, 2, c, 4, 5];`这种写好是错误的，需要把字符c用引号括起来`var arr = [1, 2, 'c', 4, 5];`
+* `test()`与`html()`用于获取html文档的文本，或者向文档刘输出文本，`innerHTML`也类似
+
+#### 解除$符号与jQuery的绑定
+* 解除绑定
+> `$.noConflict();`
+* 解除绑定后调用jQuery
+```
+(function($) {
+	$('p').click(function() {
+		...
+	});
+})(jQuery);
+```
+
+#### 检测jQuery版本
+* `var jqVersion = $.fn.jquery;`
+
+#### 使用each()操作数组
+```
+var values = ['a', 'b', 'c', 'd'];
+
+$.each(values, function(index, value) {
+	values[index] = value.toUpperCase();
+});
+```
+```
+$('p').each(function(index, el) {
+  $(el).prepend(' - ');
+});
+
+$('p').each(function(index) {
+  $(this).prepend(values[index]);
+});
+```
+
+#### 使用map()操作数组
+```
+var arr = [1, 2, 'b', 4, 5];
+  
+  $('#before').append(JSON.stringify(arr));
+  
+  arr = $.map(arr, function(value) {
+    return 'done something with ' + value;
+  });
+  
+  $('#after').append(JSON.stringify(arr));
+```
+
+#### `get()`、`toArray()`、`makeArray()`方法
+```
+// html结构
+<p>First</p>
+<p>Second</p>
+<p>Third</p>
+<button id="get">Get</button><br/>
+<button id="to-array">To array</button><br/>
+<button id="make-array">Make array</button><br/>
+<button id="first">First</button><br/>
+<button id="get-first">Get first</button><br/>
+<button id="get-last">Get last</button>
+
+//jQuery
+$('#get').click(function() {
+    alert('Get p = ' + $('p').get());
+  });
+$('#to-array').click(function() {
+    alert('Get p = ' + $('p').toArray());
+  });
+$('#make-array').click(function() {
+    alert('Get p = ' + $.makeArray($('p')));
+  });
+$('#first').click(function() {
+    alert('First p = ' + $('p')[0].innerHTML);
+  });
+
+$('#get-first').click(function() {
+    alert('Get first p = ' + $('p').get(0).innerHTML);
+  });
+  
+// 获取最后一个元素，索引为-1，get(-1)
+$('#get-last').click(function() {
+    alert('Get last p = ' + $('p').get(-1).innerHTML);
+  });
+```
+
+
+#### `index()`方法获取元素位置
+```
+$(document).ready(function() {
+	$(this).index();
+})
+```
+
+#### `grep()`查找满足过滤函数的数组元素。原始数组不受影响
+```
+var arr = [ 1, 9, 3, 8, 6, 1, 5, 9, 4, 7, 3, 8, 6, 9, 1 ];
+$("div").text(arr.join(", "));
+ 
+arr = jQuery.grep(arr, function(n, i){
+  return (n != 5 && i > 4);
+});
+$("p").text(arr.join(", "));
+ 
+arr = jQuery.grep(arr, function (a) { return a != 9; });
+$("span").text(arr.join(", "));
+// text(arr.join(", ")将数组转为字符串输出
+```
+
+#### 使用`length()`检测元素集的大小
+```
+$(document).ready(function() {
+	alert($('p').length);
+})
+```
+
+#### 获取HTML5的data属性
+
+* 所谓data-*实际上上就是data-前缀加上自定义的属性名，使用这样的结构可以进行数据存放
+```
+// html部分
+<p data-myattribute="just some random content" 
+id="test-data">If you press the button, you can reveal 
+the text hidden as an attribute in side the paragraph 
+element as an HTML5 data attribute.</p>
+
+//jQuery
+$('button').click(function() {
+    alert('The data is: ' + $('#test-data').data('myattribute'));   
+  });
+```
+
+#### 使用`data()`存储元素数据
+> `$('#myid').data('myattribute', 'some data');`
+
+
+#### 使用`removeData()`移除元素数据
+> `$('#myid').removeData();`
+
+#### 检验和操作变量
+* `$.type()`检测类型
+* `inArray(x, Array)`查找数组中是否存在一指定值，存在返回该元素在数组中的索引，不存在返回`-1`
+* `unique(Array)`筛选出数组中的唯一元素，直接在原数组过滤掉重复的元素
+* `merge(Array, [1, 2])`合并数组
+
+#### 使用extend()扩展对象
+`$.extend(object1, object2); `
+* 把第一个对象合并到第二个对象，第一个对象中的同名函数和属性会被覆盖，第一个对象被修改，第二个对象不变
+`$.extend({}, object1, object2);`
+* 与上一方法的区别是合并生成了一个新的对象，没有修改`object1`
+
+#### 序列化表单中的数据
+* `serialize()`方法获取表单内容，返回转义过的查询字符串
+> `$('form').serialize();`
+* 'serializeArray()'完成类似的功能，内部辅助方法
+> `JSON.stringify($('form').serializeArray());`
+
+
+#### 检查浏览器支持特性`$.support[name];`
+
+```
+var result = [];
+ $.each(
+ ('ajax boxModel changeBubbles checkClone checkOn cors cssFloat ' +
+ 'hrefNormalized htmlSerialize leadingWhitespace noCloneChecked ' +
+ 'noCloneEvent opacity optDisabled optSelected style ' +
+ 'submitBubbles tbody').split(' '), function(index, name) {
+  result.push(name + ' = ' + $.support[name] + '<br/>');
+});
+
+  $('#placeholder').html(result.join('') );
+```
