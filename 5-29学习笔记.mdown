@@ -1,0 +1,179 @@
+## 5-29学习笔记
+#### `.add( selector, context )`
+	* selector  
+	类型: Selector  
+	一个字符串表示的选择器表达式，找到更多的元素添加到匹配的元素集合
+	* context  
+	类型: Element  
+	指定选择器查找元素所在的上下文; 类似`$(selector, context)`方法的context（上下文)参数
+* 一个jQuery对象，表示一个DOM元素的集合，`.add()`方法通过传递这些元素组合到该方法构造一个新的jQuery对象。`.add()`的参数可以几乎接受任何的`$()`，包括一个jQuery选择器表达式，DOM元素，或HTML片段引用
+* Example: 根据给定的表达式，向匹配的元素集合中添加一些元素。  
+`$("p").add("span").css("background", "yellow");`
+* Example: 动态的向匹配的元素集合中添加一些元素。  
+`$("p").clone().add("<span>Again</span>").appendTo(document.body);`
+* Example: 向匹配的元素集合中添加一些元素对象。  
+`$("p").add(document.getElementById("a")).css("background", "yellow");`
+* Example: 在`li`元素内加入`div`元素内的`p`元素，不加入独立的`p`元素。  
+`$('li').add('p', 'div').css('color', 'green');`
+
+---------------
+
+#### `.filter( selector )`
+* 描述: 筛选元素集合中匹配表达式 或 通过传递函数测试的 那些元素集合
+	* `.filter( selector )`  
+	selector  
+	类型: Selector  
+	一个用于匹配元素的选择器字符串
+	* `.filter( function(index) )`  
+	function(index)  
+	类型: Function()  
+	一个函数用作测试集合中的每个元素。`this` 是当前DOM元素
+	* `.filter( element )`  
+	element  
+	类型: Element  
+	一个匹配当前元素集合的元素
+	* `.filter( jQuery object )`  
+	jQuery object  
+	类型: Object  
+	现有jQuery对象，用于进一步筛选当前元素集合
+* 一个jQuery对象表示一个DOM元素的集合，`.filter()`方法构造了一个新的jQuery对象的子集。所提供的选择器是对每个元素进行测试;这个选择器匹配的所有元素将包含在结果中。
+* Example：将1，3，和5项的背景变为红色（`:even` 和 `:odd`使用基于`0`的索引）
+```
+// DOM结构
+<ul>
+  <li>list item 1</li>
+  <li>list item 2</li>
+  <li>list item 3</li>
+  <li>list item 4</li>
+  <li>list item 5</li>
+  <li>list item 6</li>
+</ul>
+
+$('li').filter(':even').css('background-color', 'red');
+```
+* Example: 改变所有 div 的颜色，然后为含有 "middle" 样式的 div 添加边框
+```
+$("div").css("background", "#c8ebcc")
+        .filter(".middle")
+        .css("border-color", "red");
+```
+* Example：改变所有 div 的颜色，然后为第二个 div (index == 1) 及 id 为 "fourth" 的 div 添加边框
+```
+$("div").css("background", "#b4b0da")
+            .filter(function (index) {
+                  return index == 1 || $(this).attr("id") == "fourth";
+                })
+            .css("border", "3px double red");
+```
+* Example: 选择所有的 div，并使用 DOM 元素进行筛选，过滤出 id 为 "unique" 的元素。
+```
+$("div").filter( document.getElementById("unique") )            
+```
+* Example: 选择所有的 div，并使用 jQuery 对象进行筛选，过滤出 id 为 "unique" 的元素。
+```
+$("div").filter( $("#unique") )
+```
+
+------------
+
+#### `.find( selector )`
+* 描述: 通过一个选择器，jQuery对象，或元素过滤，得到当前匹配的元素集合中每个元素的后代
+	* .find( selector )  
+	selector
+	类型: Selector
+	一个用于匹配元素的选择器字符串
+	* .find( jQuery object )  
+	jQuery object  
+	类型: Object  
+	现有匹配当前元素集合的jQuery对象
+	* .find( element )  
+	element  
+	类型: Element  
+	一个匹配当前元素集合的元素
+* 一个jQuery对象表示一个DOM元素的集合，`.find()`方法允许我们能够通过查找DOM树中的这些元素的后代元素，匹配的元素将构造一个新的jQuery对象
+* Example: 开始搜索段落所有后代的`span`元素，和`$("p span")`一样
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+  <p><span>Hello</span>, how are you?</p>
+<p>Me? I'm <span>good</span>.</p>
+<script>
+  $("p").find("span").css('color','red');
+</script>
+ 
+</body>
+</html>
+```
+* Example: 一个选择使用的所有`span`标签jQuery集合。只有`spans`在`P`标签更改为红色，而另一些是蓝色。
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    span { color: blue; }
+  </style>
+  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+  <p><span>Hello</span>, how are you?</p>
+  <p>Me? I'm <span>good</span>.</p>
+  <div>Did you <span>eat</span> yet?</div>
+<script>
+  var $spans = $('span');
+  $("p").find( $spans ).css('color','red');
+</script>
+ 
+</body>
+</html>
+```
+* Example: 为每个单词添加 `span` 标签，并为 `span` 标签添加 `hover` 事件，并且将含有 `t` 的单词变为斜体。
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  p { font-size:20px; width:200px; cursor:default; 
+      color:blue; font-weight:bold; margin:0 10px; }
+  .hilite { background:yellow; }
+  </style>
+  <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+  <p>
+  When the day is short
+  find that which matters to you
+  or stop believing
+  </p>
+<script>
+  var newText = $("p").text().split(" ").join("</span> <span>");
+  newText = "<span>" + newText + "</span>";
+ 
+  $("p").html( newText )
+    .find('span')
+    .hover(function() { 
+      $(this).addClass("hilite"); 
+    },
+      function() { $(this).removeClass("hilite"); 
+    })
+  .end()
+    .find(":contains('t')")
+    .css({"font-style":"italic", "font-weight":"bolder"});
+ 
+</script>
+ 
+</body>
+</html>
+```
+
+------------
+
+#### `.children( [selector ] )`
+* 描述: 获得匹配元素集合中每个元素的子元素，选择器选择性筛选
+	* selector  
+	类型: Selector  
+	一个用于匹配元素的选择器字符串
+* `.find()`和`.children()`方法是相似的，但后者只是针对向下一个级别的DOM树
