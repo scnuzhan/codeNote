@@ -1,0 +1,83 @@
+## 给网页添加图片
+
+#### CSS和`<img>`标签
+0. 常用来处理照片的CSS属性有：`border`, `padding`, `float`, `margin`；
+1. 一般不会直接给`<img>`标签设置属性，通常是使用一个类样式，如`.galleryImage`或`.logo`，有针对性地应用样式；
+
+-----
+
+#### 添加背景图片
+0. `body {background-image: url(images/bg.gif)}`	//括号里边的地址可以加引号也可以不加，单引号双引号都可以；
+
+-----
+
+#### 控制重复
+0. 单独使用background属性，图片将总是平铺，填满网页整个背景，可以利用属性background-repeat属性指定网页如何平铺；
+1. `background-repeat`接受四个属性值
+> * repeat：默认值，平铺满整个网页空间
+> * no-repeat：只显示一次图片，不会平铺或重复
+> * repeat-x：沿着X轴水地得重复平铺图片
+> * repeat-y：沿着y轴垂直地重复平铺图片
+
+-------
+
+#### 定位背景图片
+0. `background-position`有3种不同的方法来设定图片在水平方向和垂直方向的起点，分别是keyword（关键字）、精确值和百分比（percentage）
+1. 关键字，如：`body {background-image: url(images/bg_page.jpg); background-position: right center;`。水平方向3种定位：left、center和right，垂直方向3种定位：top、center和bottom
+2. 精确值，`background-position: 5px 8px;`，背景图片相对于原来的作为向右移动5px，向下移动8px
+3. 百分比，如何可以使用关键字或精确值来实现想要的效果，尽量不要使用百分比，要把元素定位在与元素宽度成比例的某一个点时，则必须使用百分比，`background-position: 50% 50%;`
+4. 固定背景图片，`background-attachment`属性，属性值`scroll`为默认值，背景图片会随着网页上其他内容一起滚动，属性值`fixed`则是把图片保持在背景中的某个固定位置上
+5. 背景图片background-origin和background-clip属性
+> * `background-origin：border-box;`	//将图片放于border区域的左上角，从这里开始平铺
+> * `background-origin：padding-box;`	//默认方式，将图片开始于padding区域左上角，从这开始平铺
+> * `background-origin：content-box;`	//将图片放于内容区域的右上角，从这里开始平铺
+> * `background-clip：border-box;`	//默认方式，将图片显示在内容区域背后，包括border区域，只有border为虚线时才可见
+> * `background-clip：padding-box;`	//背景图片只能显示到padding区域和内容区域的下方
+> * `background-clip：content-box;`	//限制背景图片只显示在内容区域
+
+------
+
+#### 缩放背景图片
+0. 利用background-size值控制背景图片大小（IE8不支持该属性）
+> * `background-size: 100px 200px;`	 将背景图片设为100px宽和200px高
+> * `background-size: 100px auto;`  将图片宽设为100px，高按照图片比例自动调整
+> * `background-size: 100% 100%;`  将图片缩放至完全适应背景，可能会改变比例
+1. 利用background-size关键字控制背景图片大小
+> * `background-size: contain;`  强制图片进行尺寸调整，保持图片的宽高比例，适应元素的高度或宽度
+> * `background-size: cover;`  会迫使图片的高度或宽度进行调整
+
+-----
+
+#### 利用background快捷属性
+0. 所有的background属性可以合并成一行CSS代码，`body {background: url(bullseye.gif) center center no-repeat fixed #FFF;}`，同时设置多个属性
+1. 使用background属性快捷属性时会将非定义值重置为默认值，可能会导致一些意外的结果，如：`div {background-color: yellow; background: url(image/bullseye.gif) no-repeat;}`，由于background属性在background-color属性的后面，background快捷属性会background-color属性恢复为默认值，也就是说看不到黄色背景
+2. 由于IE 8不支持某些较新的CSS background属性（size、origin以及clip），在background快捷属性中设置这些属性将会导致IE 8忽略掉其他有效属性，因而较好的使用习惯是先用background快捷属性创建可用的、正常的属性，然后再快捷属性后面再单独添加CSS3的新属性
+
+-----
+
+#### 使用多个背景图片
+0. `background: url(scrollTop.jpg) center top no-repeat, url(scrollBottom.jpg) center bottom no-repeat, url(scrollMiddle.jpg) center top repeat-y;`
+1. IE 8不支持多个背景图片属性，有两种方法伪造出多个背景图片。一是用div标签分成多个区域，二是使用伪元素，以上一样式为例，`.sidebar {background: url(scrollMiddle.jpg) center top repeat-y;}    .sidebar:before {content: url(scroolTop.jpg);}    .sidebar:after {content: url(scrollBottom.jpg);}`
+
+-----
+
+#### 使用渐变颜色
+0. 线性渐变(需要浏览器供应商前缀)
+> * `background-image: -webkit-linear-gradient(left, black, white);`  //从元素的左边以黑色开始，渐变到元素的最右边，并以白色结束
+> * `background-image: -webkit-linear-gradient(top left, black, white);`  //左上角开始，渐变到右下角
+> * `background-image: -webkit-linear-gradient(45deg, rgb(0, 0, 0), rgb(204, 204, 204));`  //以元素中心斜向上45°角向后延伸交于左下角，向右上角渐变，元素形状不一样会产生不一样的结果
+> * `background-image: -webkit-linear-gradient(left, #900, #FC0 10%, #FC0 90%, #900);`  //从0到10%由#900（红色）渐变到#FC0（橘黄色），10%到90%保持#FC0（橘黄色），从90%100%由#FC0（橘黄色）渐变到#900（红色），其中，红色/橘黄色/橘黄色/红色叫**颜色站**
+1. 重复线性渐变（IE9及以下不支持，需要添加备用的纯色背景色）
+> * `background-image: -webkit-repeat-linear-gradient(bottom left, #900 20px, #FC0 30px, #900 40px);`  //从左下角以20px红色开始，到30px处渐变为橘黄色，再从30px处橘黄色渐变到40px处为红色，并以此重复至元素右上角
+> * `background-image: -webkit-linear-gradient(45deg, #900 0, #900 10px, #FC0 10px, #FC0 20px);`  //从左下角开始45°斜向上，在0px处到10px处为红色纯色，10px到20px为橘黄色纯色，并重复至右上角
+2. 径向渐变，`background-image: -webkit-radial-gradient(red, blue);`，从元素的中信开始绘制圆形或者椭圆形的径向渐变，也可以利用background-position属性来重新定位渐变点的中心，为了指明渐变的尺寸，可以使用以下四个关键字之一：
+> * `background-image: -webkit-radial-gradient(20% 40%, cicle closest-side, red blue);`  //从元素左边20%、上方40%处为中心开始，以离渐变中心最近的边为渐变宽度，由渐变中心得红色开始渐变为蓝色
+> * `background-image: -webkit-radial-gradient(20% 40%, cicle closest-corner, red blue);`  //从中心到最近的角的距离为渐变宽度
+> * `background-image: -webkit-radial-gradient(20% 40%, cicle farthest-side，red blue);`  //中心到最远的边卫渐变宽度
+> * `background-image: -webkit-radial-gradient(20% 40%, cicle farthest-corner, red blue);`  //中心到最远的角的距离为渐变宽度
+3. 重复径向渐变，> * `background-image: -webkit-repeat-radial-gradient(circle, red 20px, orange 30px, yellow 40px, red 50px);`
+
+------
+
+#### 用Colorzilla轻松创建渐变
+0. [CSS渐变在线生成器](http://www.colorzilla.com/gradient-editor/)

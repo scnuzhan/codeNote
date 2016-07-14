@@ -1,0 +1,162 @@
+## 装饰网站导航
+#### 选择要定义样式的链接
+0. 没有专门对链接的CSS选择器，使用类、id与派生等普通选择器选择需要定义样式的链接
+1. 链接的4种状态：未访问的连接、已经被访问过的链接、正被单击的链接与鼠标正悬停在上方的链接，对应4个伪类选择器，分别是`:link`、`:visited`、`:active`与`:hover`
+2. 在CSS样式表中，为了避免各种意料之外的情况发生，在CSS表中添加这4种链接样式时应按照上述顺序。假如把`a:hover`放在`a:link`和`a:visited`的前面，那么鼠标悬停在链接上方时，链接的颜色不会改变（原因：上述4个伪类的权重值相同，后边的样式将会覆盖掉前边的样式，`a:hover`出现在前边的话，如论链接是还未被访问过的还是已经被访问过了，分别就会有`a:link`与`a:visited`覆盖掉前边的样式）
+
+-----
+
+#### 给链接定义样式
+0. `a { text-decoration: none; }`  完全取消下划线，恢复下划线使用关键词`underline`
+
+-----
+
+#### 创建导航栏
+0. 使用无序列表`<ul class="nav">`，需取消项目符号、消除padding和margin，`ul.nav { list-style: none; margin-left: 0; padding-left: 0; }`
+1. 垂直导航栏，把链接当成块显示、限制按钮的宽度，`ul.nav li { display: block; width: 8em; }`
+2. 创建水平导航栏有两种方法，一是使用`display: inline`和`display: inline-block`，一是使用浮动
+``` css
+/* `display: inline`和`display: inline-block`  */
+
+ul.nav {
+	margin-left: 0px;
+	padding-left: 0px;
+	list-style: none;	/*  取消下划线  */
+	border-bottom: 1px dashed #000;	  /*  链接底部边框线取消后会导致最后一个导航按钮没有底部边框线，导航栏菜单设置
+	一条底部边框线  */
+	text-align: center;   /*  使导航栏居中  */
+}
+
+.nav li {
+	display: inline;
+}
+
+.nav a {
+	display: inline-block;   /*  设为行内块元素以应用top/bottom padding/margin  */
+	border: 1px dashed #000;
+	border-bottom: none;   /*  防止导航栏中间按钮的边框线叠加，取消底部边框线  */
+	padding: 5px 15px;
+	background-color: #EAEAEA;
+	text-decoration: none;
+	color: #333;
+}
+
+/*  浏览器会把连个<li>之间的回车符当作一个空格，因而使用这种方法构建水平导航栏会使导航按钮之间产生缝隙，解决方法有两种，
+一是设置负值的margin属性，另一是将<li></li>放在同一行上（不常用）  */
+
+<ul class="nav">
+	<li><a href="#">Home</a></li><li>
+	<a href="#">News</a></li><li>
+	<a href="#">Reviews</a></li>
+</ul>
+```
+
+``` css
+/*  使用浮动创建水平导航栏（无法使导航栏居中）  */
+.nav li {
+	float: left;
+}
+
+/*  如果需要让导航按钮的宽度一致，则需给<a>设置width属性值，默认宽度为内毒文本宽度，不设width
+则最好设置left/right padding，给文本留点空间  */
+ul.nav a {
+	display: block;
+}
+
+ul.nav {
+	overflow: hidden;
+	/*   隐藏背景色、图片或边框，同时防止无序列表溃缩  */
+}
+```
+
+-----
+
+#### CSS Sprites雪碧图
+0. 将多种状态的图片拼到一起，通过调整背景图片的位置来实现不同状态的切换
+``` CSS
+a {
+	background: #E7E7E7 url(images/nav.png) no-repeat left top;
+}
+
+a:hover {
+	background-position: 0 -39px;
+}
+```
+
+----
+
+#### 给特殊链接定义样式
+0. ^=意为“以……开头”，$=意为“以……结尾”，*=意为“含有……”
+``` CSS
+a[href^="http://"] {
+	background: url(images/globe.png) no-repeat center right;
+	padding-right: 15px;
+}
+```
+
+
+水平导航栏（float）实例代码
+``` HTML
+<!--  html结构  -->
+<body class="expert">   <!--  不同页面修改为相应的类，实现在导航栏上特殊标注当前页  -->
+  <ul class="mainNav">
+    <li><a href="/index.html" class="homeLink">Home</a></li>
+    <li><a href="/features/" class="featureLink">Features</a></li>
+    <li><a href="/experts/" class="expertLink">Experts</a></li>
+    <li><a href="/quiz/" class="quizLink">Quiz</a></li>
+    <li><a href="/projects/" class="projectLink">Projects</a></li>
+    <li><a href="/horoscopes/" class="horsecopeLink">Horoscopes</a></li>
+  </ul>
+</body>
+```
+
+``` CSS
+/*  css  */
+body {
+	font: 62.5% Verdana, Arial, Helvetica, sans-serif;
+	padding: 20px;
+}
+.mainNav {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-left: 1px dashed #999;
+	overflow: hidden;
+}
+.mainNav li {
+	float: left;
+	width: 12em;
+}
+.mainNav a {
+	color: #000;
+	font-size: 11px;
+	text-transform: uppercase;
+	text-decoration: none;
+	border: 1px dashed #999;
+	border-left: none;
+	padding: 7px 5px 7px 30px;
+	display: block;
+	background-color: #E7E7E7;
+	background-image: url(images/nav.png);
+	background-repeat: no-repeat;
+	background-position: 0 2px;
+}
+.mainNav a:hover {
+	font-weight: bold;
+	background-color: #B2F511;
+	background-position: 3px 50%;
+}
+.home .homeLink,
+.feature .featureLink,
+.expert .expertLink,
+.quiz .quizLink,
+.project .projectLink,
+.horoscope .horsecopeLink
+{
+	background-color: #FFF;
+	background-position: 3px 100%;
+	padding-right: 15px;
+	padding-left: 30px;
+	font-weight: bold;
+}
+```

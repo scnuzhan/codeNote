@@ -1,0 +1,84 @@
+## margin、padding和border
+#### 用margin和padding控制空间
+0. `margin: 0 2em 1em;`	//将margin-top设置为0，margin-right与margin-left都为2em，margin-bottom为1em；
+1. 当元素的bottom margin碰到另外一个元素的top margin时，浏览器不是把这两个边距相加，而是应用两者中较大的一个；
+2. **边距折叠**	在网页中添加一个“警告”框（比如在一个`<div>`标签里面放了一条警告信息），然后让top margin和bottom margin各增加20px，把警告框与其上方的标题以及下方的文本段落隔开，到这里一切都正常，当在警告框里面插入一个标题，并且设置它的margin为10px时，标题的边距实质上出现在div的上方了。解决方法是：给`<div>`标签设置padding或者border；
+3. 对于行内标签（`<a>, <strong>, <em>, <span>`等，CSS可以行内元素设置字体、颜色、背景以及边框线，但是无法使用top/bottom margin或top/padding padding来增加行内高度，如果想要让行内元素的top/bottom margin或top/padding生效，可以设置属性`display: inline-block`，是行内元素变成行内块级元素；
+4. `<img>`是特殊的行内标签，可以使用top/bottom margin或top/padding padding来增加图片框的高度；
+5. 属性`display: inline;`与`display: block;`可以使块级元素变成行内元素，使行内元素变成块级元素，属性`display: none;`则是将元素完全隐藏起来；
+
+---------
+
+#### 添加边框
+0. `border: 4px solid #FF0000;`	//border通过三个属性进行控制：color（颜色）、width（宽度）和style（样式），三者的顺序没有特殊规定，颜色可以是十六进制的数字、keyword或RGB(A)值，宽度可以使用CSS的任何度量单位，也可以使用关键字（thin、medium和thick），样式可以使用关键字solid（实线）、dashed（虚线）、dotted、double、groove、ridge、inset、outset、none和hidden，不同的浏览器显示出来的样式存在差异；
+1. 单条格式化边框与单边的margin/padding属性类似；
+
+---------
+
+#### 设置背景色
+
+0. `body {background-color: rgb(109, 218, 63);}`	//设置背景色为rgb(109, 218, 63)；
+
+---------
+
+#### 创建圆角
+0. border-radius属性可以使举行盒子的尖角变柔和，`border-radius: 30px;`	浏览器用这个属性值在元素的每一个角画一个圆，同样也可以分别给每一个角创建圆角，`border-top-left-radius: 20px;`	//左上角设置半径为20px的圆角；
+1. IE8及其更早版本不支持border-radius属性，需要添加供应商前缀`-ms-border-radius: 20px;`；
+2. **供应商前缀**
+> * `-webkit-`用于Chrome、Safari以及其他基于WebKit的浏览器；
+> * `-moz-`用于Mozilla Firefox；
+> * `-o-`用于Opera；
+> * `-ms-`用于Microsoft Internet Exploer
+
+---------
+
+#### 添加阴影
+0. `box-shadow: 4px 6px 8px rgba(0, 0, 0, .75)`	给页面元素添加阴影与给文本添加阴影类似，文本使用`text-shadow`属性，元素使用`box-shadow`属性，不同的是阴影宽度值必须采用pixel或em为单位；
+1. box-shadow属性还可以包括两个可选值：inset关键字和阴影的尺寸（spead）。关键字inset作为box-shadow的第一个值，将会创建一个嵌入式阴影，spread阴影尺寸作为第4个值（在阴影半径和阴影颜色之间），阴影尺寸会将阴影扩展制定量；
+
+-------
+
+#### 确定高度和宽度
+0. height和width属性是给样式的内容区域设定高度和宽度；
+1. 以百分比为度量单位时，元素属性值是以外围元素的宽/高度为基准；
+2. 给元素设置height属性时要非常小心，如果不能十分确定标签内容的准确尺寸，将会导致内容从底部溢出，浏览器字号的改变也会导致这种问题，因而设置height属性时要非常小心。图片、横幅等已经确定高度的可以使用height属性；
+3. 在使用float属性将浏览器设置成两列，每列占50%，当你给其中一列添加padding或者border时，将会使其宽度大于50%，造成第一列掉到第二列下方。利用`box-sizing: border-box`属性调整盒子的宽度可以解决这一问题；
+4. 属性`box-sizing`有以下三个选项：
+> * `content-box`：默认值，浏览器会将border宽度和padding厚度与width和height属性值相加，来确定该标签的屏幕宽度和高度；
+> * `padding-box`：将padding值作为width和height属性值的一部分，内容区域的宽度高度相对应的减少；
+> * `border-box`：将margin厚度和border厚度都包含到width值与height值里边；
+5. Firefox浏览器不支持box-sizing属性，需要添加供应商前缀`-moz-box-sizing: border-box;`
+6. 可以创建通用选择器将border-box应用到网页每一标签上
+> ``` css
+> 	* {
+> 		-moz-box-sizing: border-box;
+> 		-webkit-box-sizing: border-box;		
+> 		box-sizing: border-box;
+> }
+> ```
+7. **用overflow属性控制溢出文本**，当样式标签里面的内容超出了样式标签定义的宽度和高度时，浏览器会让内容溢出盒子，覆盖掉其他内容，overflow属性有4个关键字可以来控制溢出内容如何显示；
+8. overflow属性
+> * `overflow: visible;`：默认值，溢出部分覆盖掉其他内容
+> * `overflow: scroll;`：添加滚动条，在网页中创建了一个迷你型浏览器窗口，使用该属性后无论内容是否超出盒子都会有滚动条；
+> * `overflow: auto;`：内容超出时才出现滚动条；
+> * `overflow: hidden;`：隐藏任何超出盒子的那部分内容；
+9. 高度和宽度的最大化和最小化
+> * max-witdh属性，设置最大宽度，如`body {max-width: 1200px;}
+> * max-height属性，设置最大高度
+> * min-width属性，设置最小宽度
+> * min-height属性，设置最小高度
+
+-------
+
+#### 用浮动元素包围内容
+0. float属性可以把元素移到左边或者右边，在这个过程中，浮动元素下方的内容会上移，包围浮动元素；
+1. float属性有3个关键字，left、right和none，分别是让元素浮动到左边/浮动到右边，取消浮动回到正常位置；
+2. 行内元素也可以使用float属性，例如`<img>`标签，浮动的行内元素将会被浏览器当作块级元素对待；
+3. 按照css规则，除了图片之外，所有标签的浮动元素都应该设置宽度；
+4. 源代码的顺序对浮动元素的显示有很大的影响，“浮动元素下方的内容上移”中的下方既是指html文档流下方的标签元素；
+5. background（背景）与border（边框）不支持浮动。浮动元素下方元素上移包围浮动元素，当下方元素舍友背景或边框时，边框将会出现在浮动元素的下方，解决方法是给浮动元素添加`overflow: hidden;`属性；
+6. **停止浮动**`clear`属性可以让标签忽略浮动元素，例如让版权声明始终显示在浏览器窗口的底部，其有四个关键字属性值
+> * left：样式将落至左浮动元素的下方，但是仍将始终环绕右浮动对象
+> * right：强迫样式落至右浮动对象的下方，但是仍将环绕右浮动对象
+> * both：强迫样式落至左浮动和右浮动的元素下方
+> * none：默认属性值，完全关闭清楚属性，始终包围左浮动和右浮动元素

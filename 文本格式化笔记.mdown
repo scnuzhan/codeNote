@@ -1,0 +1,29 @@
+## 文本格式化
+1. 字体 
+> * `p {font-family: Arial, "Times New Roman",sans-serif;}` 
+//浏览器按照先后顺序使用字体，第一种字体不存在时，选择第二种字体,以此类推。另，当字体名称包含多个单词时，则必须用双引号括起来。
+2. 给文本添加颜色
+> * 16进制 `p {color: #6600FF;}`
+> * RGB `p {color: rgb(255, 255, 255;)`
+> * RGBA `p {clor: rgba(255, 100, 50, .5;}`	//最后一个数值表示透明度，数值为0~1，0为完全透明，1为完全不透明
+> * HSL `p {color: hsl(0, 100%, 50%);}`	//第一个值代表颜色，0为红色，红橙黄绿蓝青紫，每种颜色大致间隔51(360/7)，第二个值为饱和度，第三个值为亮度值，用0%(全黑)~100%(全白)之间的百分比表示，50%为纯色
+> * HSLA 与HSL的关系同RGBA与RGB的关系
+3. 修改字号
+> * `p {font-size: 1em;}`	`p {font-size: 16px;}`
+> * `p {font-size: large;}`	//关键字：xx-small, x-small, small, medium, large, x-large, xx-large
+4. 将网页字体设置为 `font-size: 62.5%` 刚好等于10px（62.5% * 16px = 10px，大多数Web浏览器的基准字体大小为16px），一次为基准便于估算其他文本尺寸在屏幕上显示出来的样子，例如，1.5em就是15px，2em就是20px。
+5. 格式化词语和字母
+> * `font-style: italic;` 	//斜体	`font-style: normall`	//非斜体
+> * `text-transform: uppercase`	//uppercase：大写；lowercase：小写；capitalize：首字母大写；none：不改变大小写；
+> * `text-decoration: underline;`	//underline：下划线；overline：上划线；
+> * `letter-spacing: -1px;`	//减少字母间距1px；	`word-sapcing: 2px;`	//增加单词间距2px；
+6. 给文本添加阴影
+> * `text-shadow: -4px 4px 3px #999;`	//第一个参数为水平偏移量，负值向左，第二个参数为垂直偏移量，正值向下，第三个参数为模糊度，第四个参数为阴影颜色
+> * `text-shadow: -4px 4px 3px #999, 1px -1px 2px #000;`	//同时产生两种阴影
+7. 格式化段落
+> * `line-height: 1.5em;`	//1.5倍行高
+> * `text-align: left;`	//left：左；right：右；justify：两端；center：居中；
+8. 给列表定义样式
+> * `li {list-style-type: square}`	//三种项目符号：disc实心圆，circle空心圆，square实习方块；六种数字符号：decimal十进制，decimal-leading-zero十进制前面置零，upper-alpha大写字母，lower-alpha小写字母，upper-roman大写罗马字母，lower-roman小写罗马字母
+> * 项目符号/序号定位：`list-style-position: outside;`悬挂在外，`list-style-position: inside`内嵌。
+> * `list-style-image: url(images/pic.jpg) `图形项目编号

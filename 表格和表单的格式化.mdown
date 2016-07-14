@@ -1,0 +1,64 @@
+## 表格和表单的格式化
+#### html创建表格
+``` html
+<table>
+	<caption align="bottom">
+		Table 1: CosmoFarmer.com's Indoor Mower Roundup
+	</caption>
+
+	<colgroup>
+		<col id="brand">
+		<col id="price">
+		<col id="power">
+	</colgroup>
+
+	<thead>
+		<tr>
+			<th scope="col">Branch</th>
+			<th scope="col">Price</th>
+			<th scope="col">Power</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr>
+			<td>BMW</td>
+			<td>$247.00</td>
+			<td>Mechanical</td>
+		</tr>
+
+		<tr>
+			<td>Benz</td>
+			<td>$370</td>
+			<td>Mechanical</td>
+		</tr>
+
+	</tbody>
+</table>
+```
+
+-----
+
+#### 给表格定义样式
+0. 添加padding，`td th { padding: 10px; }`
+1. 调整垂直对齐和水平对齐
+> * `text-align`控制水平方向对齐，可以设置成left、right、center和justify
+> * `vertiacl-align`控制垂直对齐，接受以下4个值：top、baseline、middle或bottom。baseline与top类似，只是浏览器会把每个单元格中首行文本的基准线排成一排
+2. 浏览器默认会让表格单元格之间隔开几个像素，若要删除间隔，可设置属性`table { border-spacing: 0; }`
+3. 消除了表格单元格之间的间隙之后，表格的边框还是双边框，利用border-collapse属性消除表格双边框，`table { border-collapse: collapse; }`，设置border-collapse属性值为collapse后border-spacing与border-radius属性将会不起作用
+4. 给表格设置隔行交叉不一样的背景色可以提升表格的易读性，`tr:nth-of-type(odd) { background-color: red; }  tr:nth-of-type(even) { background-color: blue; }`
+5. 表格的列也可以通过列id进行格式化，如：`#price { width: 200px; background-color: #F33; }`
+6. 浏览器通常会显示出空白表格单元的边框和背景色，若要隐藏空白单元格，则设置属性`table { empty-cells: hide; }`
+
+-----
+
+#### 给表单定义样式
+0. HTML表单元素
+> * `<fieldset>`标签用来集中相关的表单问题
+> * `<legend>`标签就在`<fieldset>`标签的HTML代码之后，它给一组域提供一个标签
+> * text fields（文本域）：`<input type="text">`、`<input type="password">`和`<textarea>`等
+> * buttons（按钮）：`<input type="button">`
+> * drop-down menus（下拉菜单）：`<select>`
+> * 复选框与单选框：`<input type="checkbox">`与`<input type="radio">`
+1. 每一个标签都用`<label>`包围起来
+2. 将.label的display属性值设为inline-block，并设置宽度

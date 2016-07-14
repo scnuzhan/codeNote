@@ -1,0 +1,1011 @@
+## JavaScript笔记
+
+### 快速入门
+#### 一、数据类型和变量
+##### 1.Number
+* JavaScript不区分整数和浮点数，统一用Number表示，以下都是合法的Number类型：
+```
+123; // 整数123
+0.456; // 浮点数0.456
+1.2345e3; // 科学计数法表示1.2345x1000，等同于1234.5
+-99; // 负数
+NaN; // NaN表示Not a Number，当无法计算结果时用NaN表示
+Infinity; // Infinity表示无限大，当数值超过了JavaScript的Number所能表示的最大值时，就表示为Infinity
+```
+* Number可以直接做四则运算，规则和数学一致
+
+##### 2.字符串
+* 字符串是以单引号`' '`或双引号`" "`括起来的任意文本，比如'abc'，"xyz"等等
+
+##### 3.布尔值
+* 布尔值和布尔代数的表示完全一致，一个布尔值只有true、false两种值
+
+##### 4.比较运算符
+* JavaScript允许对任意数据类型做比较，要特别注意相等运算符`==`
+* JavaScript在设计时，有两种相等比较运算符：第一种是`==`比较，它会自动转换数据类型再比较，很多时候，会得到非常诡异的结果；第二种是`===`比较，它不会自动转换数据类型，如果数据类型不一致，返回`false`，如果一致，再比较。由于JavaScript这个设计缺陷，不要使用`==`比较，始终坚持使用`===`比较。
+* NaN这个特殊的Number与所有其他值都不相等，包括它自己：`NaN === NaN; // false`
+* 唯一能判断NaN的方法是通过`isNaN()`函数：`isNaN(NaN); // true`
+* 浮点数在运算过程中会产生误差，因为计算机无法精确表示无限循环小数。要比较两个浮点数是否相等，只能计算它们之差的绝对值，看是否小于某个阈值：
+> `1 / 3 === (1 - 2 / 3); // false`  
+> `Math.abs(1 / 3 - (1 - 2 / 3)) < 0.0000001; // true`
+
+##### 5.null和undefined
+* null表示一个“空”的值，它和0以及空字符串''不同，0是一个数值，''表示长度为0的字符串，而null表示“空”。
+* JavaScript的设计者希望用null表示一个空的值，而undefined表示值未定义。事实证明，区分两者的意义不大。大多数情况下，我们都应该用null。undefined仅仅在判断函数参数是否传递的情况下有用。
+
+##### 6.数组
+* 数组是一组按顺序排列的集合，集合的每个值称为元素。JavaScript的数组可以包括任意数据类型。例如：`[1, 2, 3.14, 'Hello', null, true]`
+* 数组的元素可以通过索引来访问。请注意，索引的起始值为0：
+> `var arr = [1, 2, 3.14, 'Hello', null, true];`  
+> `arr[0]; // 返回索引为0的元素，即1`  
+> `arr[5]; // 返回索引为5的元素，即true`  
+> `arr[6]; // 索引超出了范围，返回undefined`
+
+##### 7.对象
+* JavaScript的对象是一组由键-值组成的无序集合，例如：
+```
+var person = {
+    name: 'Bob',
+    age: 20,
+    tags: ['js', 'web', 'mobile'],
+    city: 'Beijing',
+    hasCar: true,
+    zipcode: null
+};
+```
+* JavaScript对象的键都是字符串类型，值可以是任意数据类型。要获取一个对象的属性，我们用`对象变量.属性`名的方式：
+```
+person.name; // 'Bob'
+person.zipcode; // null
+```
+
+##### 8.变量
+* JavaScript动态类型语言，使用等号=对变量进行赋值。可以把任意数据类型赋值给变量，同一个变量可以反复赋值，而且可以是不同类型的变量，但是要注意只能用var申明一次
+* 变量在JavaScript中就是用一个变量名表示，变量名是大小写英文、数字、$和_的组合，且不能用数字开头。变量名也不能是JavaScript的关键字，如if、while等
+
+##### 9.strict模式
+* 如果一个变量没有通过var申明就被使用，那么该变量就自动被申明为全局变量
+* 在同一个页面的不同的JavaScript文件中，如果都不用var申明，恰好都使用了变量i，将造成变量i互相影响，产生难以调试的错误结果
+* 为了修补JavaScript这一严重设计缺陷，ECMA在后续规范中推出了strict模式，在strict模式下运行的JavaScript代码，强制通过var申明变量，未使用var申明变量就使用的，将导致运行错误
+* 启用strict模式的方法是在JavaScript代码的第一行写上：`'use strict';`
+
+-------
+
+#### 二、字符串
+* 转义字符`\`可以转义很多字符，比如`\n`表示换行，`\t`表示制表符，字符`\`本身也要转义，所以`\\`表示的字符就是`\`
+* ES6标准新增了一种多行字符串的表示方法，用\`...\`表示：
+```
+`这是一个
+多行
+字符串`;
+```
+* 字符串常见的操作如下：  
+```
+var s = 'Hello, world!';
+s.length; // 13
+```
+* 要获取字符串某个指定位置的字符，使用类似Array的下标操作，索引号从0开始：
+```
+var s = 'Hello, world!';
+
+s[0]; // 'H'
+s[6]; // ' '
+s[7]; // 'w'
+s[12]; // '!'
+s[13]; // undefined 超出范围的索引不会报错，但一律返回undefined
+```
+* 需要特别注意的是，字符串是不可变的，如果对字符串的某个索引赋值，不会有任何错误，但是，也没有任何效果：
+```
+var s = 'Test';
+s[0] = 'X';
+alert(s); // s仍然为'Test'
+```
+
+##### 字符串方法
+* JavaScript为字符串提供了一些常用方法，注意，调用这些方法本身不会改变原有字符串的内容，而是返回一个新字符串
+
+##### 1.`toUpperCase()`把一个字符串全部变为大写：
+```
+var s = 'Hello';
+s.toUpperCase(); // 返回'HELLO'
+```
+##### 2.`toLowerCase()`把一个字符串全部变为小写：
+```
+var s = 'Hello';
+var lower = s.toLowerCase(); // 返回'hello'并赋值给变量lower
+lower; // 'hello'
+```
+##### 3.`indexOf()`会搜索指定字符串出现的位置：
+```
+var s = 'hello, world';
+s.indexOf('world'); // 返回7
+s.indexOf('World'); // 没有找到指定的子串，返回-1
+```
+##### 4.`substring()`返回指定索引区间的子串：
+```
+var s = 'hello, world'
+s.substring(0, 5); // 从索引0开始到5（不包括5），返回'hello'
+s.substring(7); // 从索引7开始到结束，返回'world'
+```
+
+-------
+
+#### 三、数组
+* JavaScript的Array可以包含任意数据类型，并通过索引来访问每个元素
+* 要取得Array的长度，直接访问length属性，`arr.length`
+* 直接给Array的length赋一个新的值会导致Array大小的变化：
+```
+var arr = [1, 2, 3];
+arr.length; // 3
+arr.length = 6;
+arr; // arr变为[1, 2, 3, undefined, undefined, undefined]
+arr.length = 2;
+arr; // arr变为[1, 2]
+```
+* Array可以通过索引把对应的元素修改为新的值，因此，对Array的索引进行赋值会直接修改这个Array：
+```
+var arr = ['A', 'B', 'C'];
+arr[1] = 99;
+arr; // arr现在变为['A', 99, 'C']
+```
+* 如果通过索引赋值时，索引超过了范围，同样会引起Array大小的变化：
+```
+var arr = [1, 2, 3];
+arr[5] = 'x';
+arr; // arr变为[1, 2, 3, undefined, undefined, 'x']
+```
+* 大多数其他编程语言不允许直接改变数组的大小，越界访问索引会报错。然而，JavaScript的Array却不会有任何错误。在编写代码时，不建议直接修改Array的大小，访问索引时要确保索引不会越界。
+
+##### 数组方法
+##### 1.`indexOf()`
+* `indexOf()`与String类似，Array也可以通过indexOf()来搜索一个指定的元素的位置
+```
+var arr = [10, 20, '30', 'xyz'];
+arr.indexOf(10); // 元素10的索引为0
+arr.indexOf(20); // 元素20的索引为1
+arr.indexOf(30); // 元素30没有找到，返回-1
+arr.indexOf('30'); // 元素'30'的索引为2
+```
+##### 2.`slice()`
+* `slice()`就是对应String的`substring()`版本，它截取`Array`的部分元素，然后返回一个新的`Array`
+```
+var arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+arr.slice(0, 3); // 从索引0开始，到索引3结束，但不包括索引3: A,B,C
+arr.slice(3); // 从索引3开始到结束: D,E,F,G
+```
+* 注意到slice()的起止参数包括开始索引，不包括结束索引
+* 如果不给slice()传递任何参数，它就会从头到尾截取所有元素。利用这一点，我们可以很容易地复制一个Array
+```
+var arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+var aCopy = arr.slice();
+aCopy; // ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+aCopy === arr; // false
+```
+##### 3.`push()`和`pop()`
+* `push()`向`Array`的末尾添加若干元素，`pop()`则把`Array`的最后一个元素删除掉
+```
+var arr = [1, 2];
+arr.push('A', 'B'); // 返回Array新的长度: 4
+arr; // [1, 2, 'A', 'B']
+arr.pop(); // pop()返回'B'
+arr; // [1, 2, 'A']
+arr.pop(); arr.pop(); arr.pop(); // 连续pop 3次
+arr; // []
+arr.pop(); // 空数组继续pop不会报错，而是返回undefined
+arr; // []
+```
+
+##### 4.`unshift()`和`shift()`
+* 如果要往`Array`的头部添加若干元素，使用`unshift()`方法，`shift()`方法则把`Array`的第一个元素删掉：
+```
+var arr = [1, 2];
+arr.unshift('A', 'B'); // 返回Array新的长度: 4
+arr; // ['A', 'B', 1, 2]
+arr.shift(); // 'A'
+arr; // ['B', 1, 2]
+arr.shift(); arr.shift(); arr.shift(); // 连续shift 3次
+arr; // []
+arr.shift(); // 空数组继续shift不会报错，而是返回undefined
+arr; // []
+```
+
+##### 5.`sort()`
+* `sort()`可以对当前`Array`进行排序，它会直接修改当前`Array`的元素位置，直接调用时，按照默认顺序排序
+```
+var arr = ['B', 'C', 'A'];
+arr.sort();
+arr; // ['A', 'B', 'C']
+```
+
+##### 6.`reverse()`
+* `reverse()`把整个`Array`的元素给掉个个，也就是反转：
+```
+var arr = ['one', 'two', 'three'];
+arr.reverse(); 
+arr; // ['three', 'two', 'one']
+```
+
+##### 7.`splice()`
+* `splice()`方法是修改`Array`的“万能方法”，它可以从指定的索引开始删除若干元素，然后再从该位置添加若干元素：
+```
+var arr = ['Microsoft', 'Apple', 'Yahoo', 'AOL', 'Excite', 'Oracle'];
+// 从索引2开始删除3个元素,然后再添加两个元素:
+arr.splice(2, 3, 'Google', 'Facebook'); // 返回删除的元素 ['Yahoo', 'AOL', 'Excite']
+arr; // ['Microsoft', 'Apple', 'Google', 'Facebook', 'Oracle']
+// 只删除,不添加:
+arr.splice(2, 2); // ['Google', 'Facebook']
+arr; // ['Microsoft', 'Apple', 'Oracle']
+// 只添加,不删除:
+arr.splice(2, 0, 'Google', 'Facebook'); // 返回[],因为没有删除任何元素
+arr; // ['Microsoft', 'Apple', 'Google', 'Facebook', 'Oracle']
+```
+
+##### 8.`concat()`
+* `concat()`方法把当前的`Array`和另一个`Array`连接起来，并返回一个新的`Array`：
+```
+var arr = ['A', 'B', 'C'];
+var added = arr.concat([1, 2, 3]);
+added; // ['A', 'B', 'C', 1, 2, 3]
+arr; // ['A', 'B', 'C']
+```
+* concat()方法并**没有修改当前Array**，而是返回了一个新的Array。
+* 实际上，concat()方法可以接收任意个元素和Array，并且自动把Array拆开，然后全部添加到新的Array里：
+```
+var arr = ['A', 'B', 'C'];
+arr.concat(1, 2, [3, 4]); // ['A', 'B', 'C', 1, 2, 3, 4]
+```
+
+##### 9.`join()`
+* `join()`方法是一个非常实用的方法，它把当前`Array`的每个元素都用指定的字符串连接起来，然后返回连接后的字符串：
+```
+var arr = ['A', 'B', 'C', 1, 2, 3];
+arr.join('-'); // 'A-B-C-1-2-3'
+```
+* 如果Array的元素不是字符串，将自动转换为字符串后再连接
+
+##### 多维数组
+* 如果数组的某个元素又是一个Array，则可以形成多维数组，例如：`var arr = [[1, 2, 3], [400, 500, 600], '-'];`
+
+-------
+
+#### 四、对象
+* JavaScript的对象是一种无序的集合数据类型，它由若干键值对组成。JavaScript的对象用于描述现实世界中的某个对象
+* JavaScript用一个`{...}`表示一个对象，键值对以`xxx: xxx`形式申明，用`,`隔开。注意，最后一个键值对不需要在末尾加`,`
+* 访问属性是通过`.`操作符完成的，但这要求属性名必须是一个有效的变量名。如果属性名包含特殊字符，就必须用`''`括起来：
+```
+var xiaohong = {
+    name: '小红',
+    'middle-school': 'No.1 Middle School'
+```
+* `xiaohong`的属性名`middle-school`不是一个有效的变量，就需要用`''`括起来。访问这个属性也无法使用.操作符，必须用`['xxx']`来访问：
+```
+xiaohong['middle-school']; // 'No.1 Middle School'
+xiaohong['name']; // '小红'
+xiaohong.name; // '小红'
+```
+* 在编写JavaScript代码的时候，属性名尽量使用标准的变量名，这样就可以直接通过`object.prop`的形式访问一个属性了。
+* JavaScript规定，访问不存在的属性不报错，而是返回`undefined`
+* 由于JavaScript的对象是动态类型，你可以自由地给一个对象添加或删除属性：
+```
+var xiaoming = {
+    name: '小明'
+};
+xiaoming.age; // undefined
+xiaoming.age = 18; // 新增一个age属性
+xiaoming.age; // 18
+delete xiaoming.age; // 删除age属性
+xiaoming.age; // undefined
+delete xiaoming['name']; // 删除name属性
+xiaoming.name; // undefined
+delete xiaoming.school; // 删除一个不存在的school属性也不会报错
+```
+* 如果我们要检测`xiaoming`是否拥有某一属性，可以用`in`操作符：
+```
+var xiaoming = {
+    name: '小明',
+    birth: 1990,
+    school: 'No.1 Middle School',
+    height: 1.70,
+    weight: 65,
+    score: null
+};
+'name' in xiaoming; // true
+'grade' in xiaoming; // false
+```
+* 如果`in`判断一个属性存在，这个属性不一定是`xiaoming`的，它可能是`xiaoming`继承得到的
+* 要判断一个属性是否是`xiaoming`自身拥有的，而不是继承得到的，可以用`hasOwnProperty()`方法：
+```
+var xiaoming = {
+    name: '小明'
+};
+xiaoming.hasOwnProperty('name'); // true
+xiaoming.hasOwnProperty('toString'); // false
+```
+
+-------
+
+#### 五、条件判断
+* JavaScript使用if () { ... } else { ... }来进行条件判断
+* JavaScript把`null`、`undefined`、`0`、`NaN`和空字符串`''`视为`false`，其他值一概视为`true`
+
+-------
+
+#### 六、循环
+##### 1.for循环
+* `for`循环最常用的地方是利用索引来遍历数组：
+```
+var arr = ['Apple', 'Google', 'Microsoft'];
+var i, x;
+for (i=0; i<arr.length; i++) {
+    x = arr[i];
+    alert(x);
+}
+```
+* for循环的3个条件都是可以省略的，如果没有退出循环的判断条件，就必须使用break语句退出循环，否则就是死循环
+
+##### 2.for...in
+* `for`循环的一个变体是`for ... in`循环，它可以把一个对象的所有属性依次循环出来：
+```
+var o = {
+    name: 'Jack',
+    age: 20,
+    city: 'Beijing'
+};
+for (var key in o) {
+    alert(key); // 'name', 'age', 'city'
+}
+```
+* 要过滤掉对象继承的属性，用`hasOwnProperty()`来实现：
+```
+var o = {
+    name: 'Jack',
+    age: 20,
+    city: 'Beijing'
+};
+for (var key in o) {
+    if (o.hasOwnProperty(key)) {
+        alert(key); // 'name', 'age', 'city'
+    }
+}
+```
+* 由于`Array`也是对象，而它的每个元素的索引被视为对象的属性，因此，`for ... in`循环可以直接循环出`Array`的索引：
+```
+var a = ['A', 'B', 'C'];
+for (var i in a) {
+    alert(i); // '0', '1', '2'
+    alert(a[i]); // 'A', 'B', 'C'
+}
+```
+* 请注意，for ... in对Array的循环得到的是String而不是Number
+
+##### 3.while
+##### 4.do ... while
+
+------
+
+#### 七、Map和Set
+##### 1.Map
+* Map是一组键值对的结构，具有极快的查找速度
+```
+var m = new Map([['Michael', 95], ['Bob', 75], ['Tracy', 85]]);
+m.get('Michael'); // 95
+```
+* Map方法
+```
+var m = new Map(); // 空Map
+m.set('Adam', 67); // 添加新的key-value
+m.set('Bob', 59);
+m.has('Adam'); // 是否存在key 'Adam': true
+m.get('Adam'); // 67
+m.delete('Adam'); // 删除key 'Adam'
+m.get('Adam'); // undefined
+```
+* 由于一个key只能对应一个value，所以，多次对一个key放入value，后面的值会把前面的值冲掉：
+```
+var m = new Map();
+m.set('Adam', 67);
+m.set('Adam', 88);
+m.get('Adam'); // 88
+```
+
+##### 2.set
+* Set和Map类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在Set中，没有重复的key
+* 要创建一个Set，需要提供一个Array作为输入，或者直接创建一个空Set：
+```
+var s1 = new Set(); // 空Set
+var s2 = new Set([1, 2, 3]); // 含1, 2, 3
+```
+* 通过add(key)方法可以添加元素到Set中，可以重复添加，但不会有效果：
+```
+>>> s.add(4)
+>>> s
+{1, 2, 3, 4}
+>>> s.add(4)
+>>> s
+{1, 2, 3, 4}
+```
+* 通过delete(key)方法可以删除元素：
+```
+var s = new Set([1, 2, 3]);
+s; // Set {1, 2, 3}
+s.delete(3);
+s; // Set {1, 2}
+```
+
+#### 八、iterable
+* 遍历`Array`可以采用下标循环，遍历`Map`和`Set`就无法使用下标。为了统一集合类型，ES6标准引入了新的`iterable`类型，`Array`、`Map`和`Set`都属于`iterable`类型
+* 具有`iterable`类型的集合可以通过新的`for ... of`循环来遍历
+* 用for ... of循环遍历集合，用法如下：
+```
+var a = ['A', 'B', 'C'];
+var s = new Set(['A', 'B', 'C']);
+var m = new Map([[1, 'x'], [2, 'y'], [3, 'z']]);
+for (var x of a) { // 遍历Array
+    alert(x);
+}
+for (var x of s) { // 遍历Set
+    alert(x);
+}
+for (var x of m) { // 遍历Map
+    alert(x[0] + '=' + x[1]);
+}
+```
+* `for ... of`循环与`for ... in`循环的区别: `for ... in`循环由于历史遗留问题，它遍历的实际上是对象的属性名称。一个`Array`数组实际上也是一个对象，它的每个元素的索引被视为一个属性
+###### foreach方法
+* 遍历`iterable`类型的元素直接使用其内置的`foreach`方法，它接收一个函数，每次迭代就自动回调该函数，以`Array`为例：
+```
+var a = ['A', 'B', 'C'];
+a.forEach(function (element, index, array) {
+    // element: 指向当前元素的值
+    // index: 指向当前索引
+    // array: 指向Array对象本身
+    alert(element);
+})
+```
+* `Set与Array`类似，但`Set`没有索引，因此回调函数的前两个参数都是元素本身：
+```
+var s = new Set(['A', 'B', 'C']);
+s.forEach(function (element, sameElement, set) {
+    alert(element);
+});
+```
+* Map的回调函数参数依次为`value`、`key`和`map`本身：
+```
+var m = new Map([[1, 'x'], [2, 'y'], [3, 'z']]);
+m.forEach(function (value, key, map) {
+    alert(value);
+});
+```
+
+
+
+---------
+
+
+### 函数
+#### 一、函数定义和调用
+##### 1.定义函数
+```
+function abs(x) {
+    if (x >= 0) {
+        return x;
+    } else {
+        return -x;
+    }
+}
+```
+* 函数体内部的语句在执行时，一旦执行到return时，函数就执行完毕，并将结果返回
+* 第二种定义函数的方式
+```
+var abs = function (x) {
+    if (x >= 0) {
+        return x;
+    } else {
+        return -x;
+    }
+};
+```
+##### 2.调用函数
+* 调用函数时，按顺序传入参数即可
+* 由于JavaScript允许传入任意个参数而不影响调用，因此传入的参数比定义的参数多也没有问题，虽然函数内部并不需要这些参数
+* 需要参数的函数传入空值时，参数被赋值为`undefined`，函数返回结果为`NaN`
+* 要避免收到undefined，可以对参数进行检查
+```
+function abs(x) {
+    if (typeof x !== 'number') {
+        throw 'Not a number';
+    }
+    if (x >= 0) {
+        return x;
+    } else {
+        return -x;
+    }
+}
+```
+
+##### 3.arguments
+* 关键字`arguments`只在函数内部起作用，并且永远指向当前函数的调用者传入的所有参数，`arguments`类似`Array`但它不是一个`Array`
+* 实际上`arguments`最常用于判断传入参数的个数。你可能会看到这样的写法：
+```
+// 要把中间的参数b变为“可选”参数，就只能通过arguments判断，然后重新调整参数并赋值
+// foo(a[, b], c)
+// 接收2~3个参数，b是可选参数，如果只传2个参数，b默认为null：
+function foo(a, b, c) {
+    if (arguments.length === 2) {
+        // 实际拿到的参数是a和b，c为undefined
+        c = b; // 把b赋给c
+        b = null; // b变为默认值
+    }
+    // ...
+}
+```
+
+##### 4.rest
+* ES6引入`rest`参数来收集函数已定义参数之外的参数
+```
+function foo(a, b, ...rest) {
+    console.log('a = ' + a);
+    console.log('b = ' + b);
+    console.log(rest);
+}
+
+foo(1, 2, 3, 4, 5);
+// 结果:
+// a = 1
+// b = 2
+// Array [ 3, 4, 5 ]
+
+foo(1);
+// 结果:
+// a = 1
+// b = undefined
+// Array []
+```
+
+#### 二、变量作用域
+* 在JavaScript中，用var申明的变量实际上是有作用域的。如果一个变量在函数体内部申明，则该变量的作用域为整个函数体，在函数体外不可引用该变量
+* 由于JavaScript的函数可以嵌套，此时，内部函数可以访问外部函数定义的变量，反过来则不行：
+```
+'use strict';
+
+function foo() {
+    var x = 1;
+    function bar() {
+        var y = x + 1; // bar可以访问foo的变量x!
+    }
+    var z = y + 1; // ReferenceError! foo不可以访问bar的变量y!
+}
+```
+* JavaScript的函数在查找变量时从自身函数定义开始，从“内”向“外”查找。如果内部函数定义了与外部函数重名的变量，则内部函数的变量将“屏蔽”外部函数的变量
+##### 1.变量提升
+* JavaScript的函数定义有个特点，它会先扫描整个函数体的语句，把所有申明的变量“提升”到函数顶部：
+```
+'use strict';
+
+function foo() {
+    var x = 'Hello, ' + y;
+    alert(x);
+    var y = 'Bob';
+}
+
+foo();
+```
+* 虽然是strict模式，但语句var x = 'Hello, ' + y;并不报错，原因是变量y在稍后申明了。但是alert显示Hello, undefined，说明变量y的值为undefined。这正是因为JavaScript引擎自动提升了变量y的声明，但不会提升变量y的赋值。
+* 对于上述foo()函数，JavaScript引擎看到的代码相当于：
+```
+function foo() {
+    var y; // 提升变量y的申明
+    var x = 'Hello, ' + y;
+    alert(x);
+    y = 'Bob';
+}
+```
+* 由于JavaScript的这一怪异的“特性”，我们在函数内部定义变量时，请严格遵守“在函数内部首先申明所有变量”这一规则。最常见的做法是用一个var申明函数内部用到的所有变量
+##### 2.全局作用域
+* 不在任何函数内定义的变量就具有全局作用域。实际上，JavaScript默认有一个全局对象window，全局作用域的变量实际上被绑定到window的一个属性：
+```
+'use strict';
+
+var course = 'Learn JavaScript';
+alert(course); // 'Learn JavaScript'
+alert(window.course); // 'Learn JavaScript'
+```
+* 任何变量（函数也视为变量），如果没有在当前函数作用域中找到，就会继续往上查找，最后如果在全局作用域中也没有找到，则报ReferenceError错误
+##### 3.名字空间
+* 全局变量会绑定到window上，不同的JavaScript文件如果使用了相同的全局变量，或者定义了相同名字的顶层函数，都会造成命名冲突，并且很难被发现
+* 减少冲突的一个方法是把自己的所有变量和函数全部绑定到一个全局变量中（许多著名的JavaScript库都是这么干的：jQuery，YUI，underscore等等）。例如：
+```
+// 唯一的全局变量MYAPP:
+var MYAPP = {};
+
+// 其他变量:
+MYAPP.name = 'myapp';
+MYAPP.version = 1.0;
+
+// 其他函数:
+MYAPP.foo = function () {
+    return 'foo';
+};
+```
+##### 4.局部作用域
+* 由于JavaScript的变量作用域实际上是函数内部，我们在for循环等语句块中是无法定义具有局部作用域的变量的：
+```
+'use strict';
+
+function foo() {
+    for (var i=0; i<100; i++) {
+        //
+    }
+    i += 100; // 仍然可以引用变量i
+}
+```
+* 为了解决块级作用域，ES6引入了新的关键字let，用let替代var可以申明一个块级作用域的变量：
+```
+'use strict';
+
+function foo() {
+    var sum = 0;
+    for (let i=0; i<100; i++) {
+        sum += i;
+    }
+    i += 1; // SyntaxError
+}
+```
+##### 5.常量
+* ES6标准引入了新的关键字const来定义常量，const与let都具有块级作用域
+
+#### 三、方法
+* 在一个对象中绑定函数，称为这个对象的方法
+```
+var xiaoming = {
+    name: '小明',
+    birth: 1990,
+    age: function () {
+        var y = new Date().getFullYear();
+        return y - this.birth;
+    }
+};
+
+xiaoming.age; // function xiaoming.age()
+xiaoming.age(); // 今年调用是26,明年调用就变成27了
+```
+* 在一个方法内部，this是一个特殊变量，它始终指向当前对象，也就是xiaoming这个变量
+* JavaScript的函数内部调用`this`时，如果以对象的方法形式调用，比如`xiaoming.age()`，该函数的`this`指向被调用的对象，也就是`xiaoming`，如果单独调用函数，比如`getAge()`，此时，该函数的`this`指向全局对象，也就是`window`。
+* 用`var that = this`;，你就可以放心地在方法内部定义其他函数，而不是把所有语句都堆到一个方法中
+```
+'use strict';
+
+var xiaoming = {
+    name: '小明',
+    birth: 1990,
+    age: function () {
+        var that = this; // 在方法内部一开始就捕获this
+        function getAgeFromBirth() {
+            var y = new Date().getFullYear();
+            return y - that.birth; // 用that而不是this
+        }
+        return getAgeFromBirth();
+    }
+};
+
+xiaoming.age(); // 25
+```
+##### apply()方法
+* 要指定函数的this指向哪个对象，可以用函数本身的apply方法，它接收两个参数，第一个参数就是需要绑定的this变量，第二个参数是Array，表示函数本身的参数
+``` 
+function getAge() {
+    var y = new Date().getFullYear();
+    return y - this.birth;
+}
+
+var xiaoming = {
+    name: '小明',
+    birth: 1990,
+    age: getAge
+};
+
+xiaoming.age(); // 25
+getAge.apply(xiaoming, []); // 25, this指向xiaoming, 参数为空
+```
+##### call()方法
+* 另一个与`apply()`类似的方法是`call()`，区别是：`apply()`把参数打包成`Array`再传入；`call()`把参数按顺序传入
+```
+Math.max.apply(null, [3, 5, 4]); // 5
+Math.max.call(null, 3, 5, 4); // 5
+// 对普通函数调用，我们通常把this绑定为null
+```
+##### 装饰器
+* 利用`apply()`，我们还可以动态改变函数的行为
+* JavaScript的所有对象都是动态的，即使内置的函数，我们也可以重新指向新的函数
+* 现在假定我们想统计一下代码一共调用了多少次`parseInt()`，可以把所有的调用都找出来，然后手动加上count += 1，不过这样做太傻了。最佳方案是用我们自己的函数替换掉默认的`parseInt()`：
+```
+var count = 0;
+var oldParseInt = parseInt; // 保存原函数
+
+window.parseInt = function () {
+    count += 1;
+    return oldParseInt.apply(null, arguments); // 调用原函数
+};
+
+// 测试:
+parseInt('10');
+parseInt('20');
+parseInt('30');
+count; // 3
+```
+
+#### 四、高阶函数
+* 一个函数就可以接收另一个函数作为参数，这种函数就称之为高阶函数
+
+##### 1.map/reduce
+* `map()`方法定义在JavaScript的`Array`中，我们调用`Array`的`map()`方法，传入我们自己的函数，就得到了一个新的`Array`作为结果
+```
+function pow(x) {
+    return x * x;
+}
+
+var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+arr.map(pow); // [1, 4, 9, 16, 25, 36, 49, 64, 81]
+```
+* `Array`的`reduce()`把一个函数作用在这个`Array`的`[x1, x2, x3...]`上，这个函数必须接收两个参数，`reduce()`把结果继续和序列的下一个元素做累积计算，其效果就是：`[x1, x2, x3, x4].reduce(f) = f(f(f(x1, x2), x3), x4)`
+```
+// 比方说对一个Array求和，就可以用reduce实现：
+var arr = [1, 3, 5, 7, 9];
+arr.reduce(function (x, y) {
+    return x + y;
+}); // 25
+```
+##### 2.filter()方法
+* `filter()`用于把`Array`的某些元素过滤掉，然后返回剩下的元素
+* 和`map()`类似，`Array`的`filter()`也接收一个函数。和`map()`不同的是，`filter()`把传入的函数依次作用于每个元素，然后根据返回值是`true`还是`false`决定保留还是丢弃该元素
+* 例如，在一个Array中，删掉偶数，只保留奇数，可以这么写：
+```
+var arr = [1, 2, 4, 5, 6, 9, 10, 15];
+var r = arr.filter(function (x) {
+    return x % 2 !== 0;
+});
+r; // [1, 5, 9, 15]
+```
+
+##### 3.sort()方法
+* 排序也是在程序中经常用到的算法。无论使用冒泡排序还是快速排序，排序的核心是比较两个元素的大小。如果是数字，我们可以直接比较，但如果是字符串或者两个对象呢？直接比较数学上的大小是没有意义的，因此，比较的过程必须通过函数抽象出来。通常规定，对于两个元素`x`和`y`，如果认为`x < y`，则返回`-1`，如果认为`x == y`，则返回`0`，如果认为`x > y`，则返回`1`，这样，排序算法就不用关心具体的比较过程，而是根据比较结果直接排序。
+* JavaScript的`Array`的`sort()`方法就是用于排序的，但是排序结果可能让你大吃一惊：
+```
+// 看上去正常的结果:
+['Google', 'Apple', 'Microsoft'].sort(); // ['Apple', 'Google', 'Microsoft'];
+
+// apple排在了最后:
+['Google', 'apple', 'Microsoft'].sort(); // ['Google', 'Microsoft", 'apple']
+
+// 无法理解的结果:
+[10, 20, 1, 2].sort(); // [1, 10, 2, 20]
+```
+	> 第二个排序把`apple`排在了最后，是因为字符串根据ASCII码进行排序，而小写字母`a`的ASCII码在大写字母之后。  
+	> 第三个排序结果是因为`Array`的`sort()`方法默认把所有元素先转换为String再排序，结果`'10'`排在了`'2'`的前面，因为字符`'1'`比字符`'2'`的ASCII码小。
+* 利用`sort()`方法按数字大小排序，可以这么写：
+```
+var arr = [10, 20, 1, 2];
+arr.sort(function (x, y) {
+    if (x < y) {
+        return -1;
+    }
+    if (x > y) {
+        return 1;
+    }
+    return 0;
+}); // [1, 2, 10, 20]
+```
+* 利用`sort()`方法按数字大小倒序排序，可以这么写：
+```
+var arr = [10, 20, 1, 2];
+arr.sort(function (x, y) {
+    if (x < y) {
+        return 1;
+    }
+    if (x > y) {
+        return -1;
+    }
+    return 0;
+}); // [20, 10, 2, 1]
+```
+* `sort()`方法会直接对`Array`进行修改，它返回的结果仍是当前`Array`
+```
+var a1 = ['B', 'A', 'C'];
+var a2 = a1.sort();
+a1; // ['A', 'B', 'C']
+a2; // ['A', 'B', 'C']
+a1 === a2; // true, a1和a2是同一对象
+```
+
+#### 五、闭包
+* 闭包是指能够访问自由变量的函数。换句话说，定义在闭包中的函数可以“记忆”它被创建时候的环境
+```
+function makeFunc() {
+  var name = "Mozilla";
+  function displayName() {
+    alert(name);
+  }
+  return displayName;
+}
+
+var myFunc = makeFunc();
+myFunc();
+```
+* 上例中`myFunc`变成一个*闭包*了。 闭包是一种特殊的对象。它由两部分构成：函数，以及创建该函数的环境。环境由闭包创建时在作用域中的任何局部变量组成。在我们的例子中，`myFunc`是一个闭包，由`displayName`函数和闭包创建时存在的`"Mozilla"`字符串形成。
+```
+function makeAdder(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+
+var add5 = makeAdder(5);
+var add10 = makeAdder(10);
+
+console.log(add5(2));  // 7
+console.log(add10(2)); // 12
+```
+* 上例中`makeAdder`是一个函数工厂 — 创建将指定的值和它的参数求和的函数，在上面的示例中，我们使用函数工厂创建了两个新函数 — 一个将其参数和`5` 求和，另一个和`10`求和。`add5`和`add10`都是闭包。它们共享相同的函数定义，但是保存了不同的环境。在`add5`的环境中，`x`为`5`。而在`add10`中，`x`则为`10`。
+#### 六、箭头函数
+* ES6标准新增了一种新的函数：Arrow Function（箭头函数）。它的定义用的就是一个箭头：`x => x * x`，相当于`function (x) { return x * x; }`
+* 当箭头函数包含多个语句时，就不能省略`{ ... }`和`return`
+```
+x => {
+    if (x > 0) {
+        return x * x;
+    }
+    else {
+        return - x * x;
+    }
+}
+```
+* 如果参数不是一个，就需要用括号()括起来
+```
+// 两个参数:
+(x, y) => x * x + y * y
+
+// 无参数:
+() => 3.14
+
+// 可变参数:
+(x, y, ...rest) => {
+    var i, sum = x + y;
+    for (i=0; i<rest.length; i++) {
+        sum += rest[i];
+    }
+    return sum;
+}
+```
+* 如果要返回一个对象就需要将其用括号括起来，因为和函数体的{ ... }有语法冲突，所以要改为：
+```
+x => ({ foo: x })
+```
+* 箭头函数内部的`this`是词法作用域，由上下文确定,箭头函数完全修复了`this`的指向，`this`总是指向词法作用域，也就是外层调用者`obj`：
+```
+var obj = {
+    birth: 1990,
+    getAge: function () {
+        var b = this.birth; // 1990
+        var fn = () => new Date().getFullYear() - this.birth; // this指向obj对象
+        return fn();
+    }
+};
+obj.getAge(); // 25
+```
+
+#### 七、generator
+* generator（生成器）是ES6标准引入的新的数据类型。一个generator看上去像一个函数，但可以返回多次
+* generator和函数不同的是，generator由`function*`定义（注意多出的`*`号），并且，除了`return`语句，还可以用`yield`返回多次。
+
+--------
+
+### 标准对象
+#### 一、标准对象
+* 在JavaScript的世界里，一切都是对象。用`typeof`操作符可以获取对象的类型，它总是返回一个字符串。
+* `number`、`string`、`boolean`、`function`和`undefined`有别于其他类型，其他的对象包括`null`和`Array`都为通常意义上的`object`
+* 需要遵守的规则
+> * 不要使用new Number()、new Boolean()、new String()创建包装对象；（包装后类型变为object）
+> * 用parseInt()或parseFloat()来转换任意类型到number；
+> * 用String()来转换任意类型到string，或者直接调用某个对象的toString()方法；
+> * 通常不必把任意类型转换为boolean再判断，因为可以直接写if (myVar) {...}；
+> * typeof操作符可以判断出number、boolean、string、function和undefined；
+> * 判断Array要使用Array.isArray(arr)；
+> * 判断null请使用myVar === null；
+> * 判断某个全局变量是否存在用typeof window.myVar === 'undefined'；
+> * 函数内部判断某个变量是否存在用typeof myVar === 'undefined'。
+
+#### 二、Date
+* 在`JavaScript`中，Date对象用来表示日期和时间。要获取系统当前时间，用：
+```
+var now = new Date();
+now; // Wed Jun 24 2015 19:49:22 GMT+0800 (CST)
+now.getFullYear(); // 2015, 年份
+now.getMonth(); // 5, 月份，注意月份范围是0~11，5表示六月
+now.getDate(); // 24, 表示24号
+now.getDay(); // 3, 表示星期三
+now.getHours(); // 19, 24小时制
+now.getMinutes(); // 49, 分钟
+now.getSeconds(); // 22, 秒
+now.getMilliseconds(); // 875, 毫秒数
+now.getTime(); // 1435146562875, 以number形式表示的时间戳
+```
+* JavaScript的月份范围用整数表示是`0~11`，`0`表示一月，`1`表示二月……
+* 第二种创建一个指定日期和时间的方法是解析一个符合ISO 8601格式的字符串：
+`
+var d = Date.parse('2015-06-24T19:49:22.875+08:00');
+d; // 1435146562875
+`
+* `Date`对象表示的时间总是按浏览器所在时区显示的，不过我们既可以显示本地时间，也可以显示调整后的UTC时间：
+```
+var d = new Date(1435146562875);
+d.toLocaleString(); // '2015/6/24 下午7:49:22'，本地时间（北京时区+8:00），显示的字符串与操作系统设定的格式有关
+d.toUTCString(); // 'Wed, 24 Jun 2015 11:49:22 GMT'，UTC时间，与本地时间相差8小时
+```
+* 获取当前时间戳
+```
+if (Date.now) {
+    alert(Date.now()); // 老版本IE没有now()方法
+} else {
+    alert(new Date().getTime());
+}
+```
+
+#### 三、RerExp正则表达式
+* `\d`可以匹配一个数字，`\w`可以匹配一个字母或数字
+* 如果直接给出字符，就是精确匹配
+* `.`可以匹配任意一个字符
+* 要匹配变长的字符，在正则表达式中，用`*`表示任意个字符（包括0个），用`+`表示至少一个字符，用`?`表示0个或1个字符，用`{n}`表示n个字符，用`{n,m}`表示n-m个字符
+* `\s`可以匹配一个空格（也包括Tab等空白符），所以`\s+`表示至少有一个空格，例如匹配`' '`，`'\t\t'`等
+* 由于`'-'`是特殊字符，在正则表达式中，要用`'\'`转义
+* 要做更精确地匹配，可以用[]表示范围，比如：
+> * [0-9a-zA-Z\_]可以匹配一个数字、字母或者下划线；
+> * [0-9a-zA-Z\_]+可以匹配至少由一个数字、字母或者下划线组成的字符串，比如'a100'，'0_Z'，'js2015'等等；
+> * [a-zA-Z\_\$][0-9a-zA-Z\_\$]*可以匹配由字母或下划线、$开头，后接任意个由一个数字、字母或者下划线、$组成的字符串，也就是JavaScript允许的变量名；
+> * [a-zA-Z\_\$][0-9a-zA-Z\_\$]{0, 19}更精确地限制了变量的长度是1-20个字符（前面1个字符+后面最多19个字符）
+* `A|B`可以匹配`A`或`B`，所以`[J|j]ava[S|s]cript`可以匹配`'JavaScript'`、`'Javascript'`、`'javaScript'`或者`'javascript'`
+* `^`表示行的开头，`^\d`表示必须以数字开头
+* `$`表示行的结束，`\d$`表示必须以数字结束
+* 有两种方法可以用来创建正则表达式，第一种方式是直接通过`/正则表达式/`写出来，第二种方式是通过`new RegExp('正则表达式')`创建一个RegExp对象
+```
+var re1 = /ABC\-001/;
+var re2 = new RegExp('ABC\\-001');
+```
+* 切分字符串，`'a,b, c  d'.split(/[\s\,]+/); // ['a', 'b', 'c', 'd']`
+* 除了简单地判断是否匹配之外，正则表达式还有提取子串的强大功能。用()表示的就是要提取的分组（Group）。比如：
+`^(\d{3})-(\d{3,8})$`分别定义了两个组，可以直接从匹配的字符串中提取出区号和本地号码：
+```
+var re = /^(\d{3})-(\d{3,8})$/;
+re.exec('010-12345'); // ['010-12345', '010', '12345']
+re.exec('010 12345'); // null
+```
+* 如果正则表达式中定义了组，就可以在RegExp对象上用`exec()`方法提取出子串来。`exec()`方法在匹配成功后，会返回一个`Array`，第一个元素是正则表达式匹配到的整个字符串，后面的字符串表示匹配成功的子串。`exec()`方法在匹配失败时返回`null`。
+* 正则匹配默认是贪婪匹配，也就是匹配尽可能多的字符。举例如下，匹配出数字后面的`0`，由于`\d+`采用贪婪匹配，直接把后面的0全部匹配了，结果`0*`只能匹配空字符串了
+```
+var re = /^(\d+)(0*)$/;
+re.exec('102300'); // ['102300', '102300', '']
+```
+* 让`\d+`采用非贪婪匹配（也就是尽可能少匹配），才能把后面的`0`匹配出来，加个`?`就可以让`\d+`采用非贪婪匹配：
+```
+var re = /^(\d+?)(0*)$/;
+re.exec('102300'); // ['102300', '1023', '00']
+```
+
+#### 四、JSON
+##### 1.序列化
+* 把JavaScript对象序列化成JSON格式字符串
+```
+var xiaoming = {
+    name: '小明',
+    age: 14,
+    gender: true,
+    height: 1.65,
+    grade: null,
+    'middle-school': '\"W3C\" Middle School',
+    skills: ['JavaScript', 'Java', 'Python', 'Lisp']
+};
+
+JSON.stringify(xiaoming); // '{"name":"小明","age":14,"gender":true,"height":1.65,"grade":null,"middle-school":"\"W3C\" Middle School","skills":["JavaScript","Java","Python","Lisp"]}'
+```
+* `JSON.stringify()`接受3个参数，第1个参数为格式化对象，第二个参数用于控制如何筛选对象的键值，如果我们只想输出指定的属性，可以传入`Array`，第3个参数接受一个函数，这样对象的每个键值对都会被函数先处理
+
+* 可以给对象定义一个toJSON()的方法，直接返回JSON应该序列化的数据

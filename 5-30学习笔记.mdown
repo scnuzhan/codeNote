@@ -1,0 +1,17 @@
+## 5-30学习笔记
+#### `.has( selector )`
+* 描述: 筛选匹配元素集合中的那些有相匹配的选择器或DOM元素的后代元素  `$('li').has('ul').css('background-color', 'red');`
+
+#### `.is( selector )`
+* 描述: 判断当前匹配的元素集合中的元素，是否为一个选择器，DOM元素，或者jQuery对象，如果这些元素至少一个匹配给定的参数，那么返回`true`
+	* selector  
+	类型: Selector  
+	一个字符串，包含一个用来匹配元素的选择器表达式。
+
+#### 使用jQuery动态生成HTML
+```
+$('<p/>', {
+	class: 'test',
+	html: 'text'
+}).appendTo('#myid');
+```
