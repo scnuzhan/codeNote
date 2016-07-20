@@ -13,3 +13,4 @@
 * h5新标签：`<header>`、`<nav>`、`<aside>`、`<article>`、`<section>`、`<footer>`
 * `<em>`与`<strong>`有强调作用，`<i>`与`<b>`只有形式作用，不强调
 * `<cite>`引用出处，`<q>`引用一句话，`<blockquote>`大段引用，`<pre>`格式化文本使用，`<dl>`无序列表，`<iframe>`嵌入页面，`<object>`/`<embed>`嵌入外部资源
+* 实体字符、转义字符：空格`&nbsp;`、双引号`&quot;`、<`&lt;`、>`&gt;`、版权`$copy;`、&`&amp;`
