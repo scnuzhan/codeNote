@@ -1,0 +1,43 @@
+## CSS
+
+#### CSS选择器
+
+##### 属性选择器
+1. `[att]`：选中具有某个属性的标签，如`[disabled]`
+2. `[att=val]`：选中属性为某个值的标签，如`[id=nav]`，id选择器是一种特殊的属性选择器，`#nav{} == [id=nav]{}`
+3. `[att~=val]`：选中属性带有某个值的标签，如`[class~=sports]`，类选择器是一种特殊的属性选择器，`.sports{} == [class~=sports]`
+4. `[att|=val]`：选中属性值为某一值，或者以该值加一短横杠开头的标签，一般用于`<lang>`标签，如：`[lang|=en]`，属性值为`en`或者`en-`开头的属性
+5. `[att^=val]`，属性值以…开头，`[href^="#"]`：以#开头的链接(注：属性值为符号或者包含空格时需加双引号)
+6. `[att$=val]`，属性值以…结尾，`[href$=pdf]`：以pdf结尾的链接
+7. `[att*=val]`，属性值包含…，`[href*=163]`：包含关键字163的链接
+
+##### 伪类选择器
+* 链接伪类选择器的顺序，`a:link{...}`  `a:visited{...}`  `a:hover{...}`  `a:active{...}`
+* 常用伪类选择器  
+```
+input:enabled{...}
+input:disabled{...}
+input:checked{...}
+:first-child
+:last-child
+:nth-child(even)
+:nth-child(3n+1)
+:nth-last-child(3n+1)
+:only-child()
+:first-of-type()
+:last-of-type()
+:nth-of-type(even)  
+:nth-last-of-type(even)
+:only-of-type()  //代表了任意一个元素，这个元素没有其他相同类型的兄弟元素。
+```
+* 伪元素选择器
+```
+::first-letter
+::first-line
+::before{content: "before"}
+::after{content: "after"}
+::selection
+```
+* `.main + h2 {...}`：类`.main`后的第一个`<h2>`兄弟标签
+* `.mian ~ p {...}`：类`.main`后的全部`<h2>`兄弟标签
+* 非继承属性可以通过属性`inherit`使其变成继承属性
