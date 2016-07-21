@@ -41,3 +41,79 @@ input:checked{...}
 * `.main + h2 {...}`：类`.main`后的第一个`<h2>`兄弟标签
 * `.mian ~ p {...}`：类`.main`后的全部`<h2>`兄弟标签
 * 非继承属性可以通过属性`inherit`使其变成继承属性
+
+##### 文本
+```
+font-size: <length>|<percentage>|<absolute-size>|<relative-size>`
+font-family: [<family-name>|<generic-family>]#
+font-weight: normal|bold
+font-style: normal|italic
+line-height: normal|<number>|<length>|<percentage>
+font: [[<font-style>||<font-weight>]?<font-size>[/<line-height>]?<font-family>]
+```
+
+##### 对齐
+```
+text-align: left|right|center|justfiy
+vertical-align: baseline|sub|super|top|text-top|middle|bottom|text-bottom|<percentage>|<length>
+text-indent: <length>|<percentage>  //首行缩进
+white-space: normal|nowrap|pre|pre-wrap|pre-line  //格式化
+word-wrap: normal|break-word  //长单词换行
+word-break:normal|break-all  //拆分单词
+text-shadow: none|[<length>{2,3}&&<color>?]#
+text-decoration: none|[underline||overline||line-through]
+text-overflow: clip|ellipsis //必须要先设置overflow: hidden与white-space: nowrap才有效
+cursor: [<url>,]*[auto|default|none|help|pointer|zoom-in|zoom-out|move]
+```
+* white-space属性值
+
+|            |   New Lines   |  Spaces and Tabs  |   Text Wrapping   |
+| :-------:  |    :-----:    |    :--------:     |     :-------:     |
+|   normal   |    Collapse   |      Collapse     |        wrap       |
+|   nowrap   |    Collapse   |      Collapse     |      No wrap      |
+|    pre     |    Preserve   |      Preserve     |      No wrap      |
+|  pre-warp  |    Preserve   |      Preserve     |        wrap       |
+|  pre_line  |    Preserve   |      Collapse     |        wrap       |
+
+* 文本/颜色属性大多都可以通过设置`inherit`属性来继承父辈元素属性
+
+##### 盒模型
+```
+width: <length>|<percentage>|auto|inherit
+height: <length>|<percentage>|auto|inherit
+padding: [<length>|<percentage>]{1,4}|inherit
+margin: [<length>|<percentage>|auto]{1,4}|inherit
+border: [<border-width>||<border-style>||<border-color>]|inherit
+border-style: [solid|dashed|dotted]{1,4}
+```
+* margin边距合并
+	* 毗邻元素的margin值会合并，取两者间的大值
+	* 父元素与第一个/最后一个子元素的上/下margin值合并，去两者间的大值
+	* 设置margin值后若没有叠加，则应考虑margin合并的情况
+```
+border-radius: [<length>|<percentage>]{1,4}[/[<length>|<percentage>]{1,4}]?
+overflow: visiable|hidden|scroll|auto
+box-sizing: content-box|border-box
+box-shadow: none|[inset?&&<length>{2,4}&&<color>]#
+outline:[<outline-width>||<outline-style>||<outline-color>]|inherit  //盒模型描边，不占空间
+```
+
+##### 背景
+```
+background-color: <color>|transparent
+background-image: [<image>|none]#
+background-repeat: [repeat-x|repeat-y|[repeat|space|round|no-repeat]{1,2}]#
+background-attachment: [scroll|fixed|local]#  //背景图片是否滚动
+background-position: <position>#
+linear-gradient([[<angle|to <side-or-corner>],]?<color-stop>[,<color-stop>]+)
+<side-or-corner> == [left|right]||[top|bottom]
+<color-stop> == <color>[<percentage>|<length>]?
+radial-gradient([[circle||<length>][at <position]?,|[ellipse||[<length>|<percentage>]{2}][at <position>]?,|[[circle|ellipse]||<extent-keyword>][at <position>]?,|at <position>,]? <color-syop>[,<color-stop>]+)
+repeat-linear/radial-gradient()
+background-origin: [border-box|padding-box|content-box]#  //原点位置
+background-clip: [border-box|padding-box|content-box]#  //背景图片是否要出现在padding与margin区域
+background-size: [[<length>|<percentage>|auto]{1,2}|cover|contain]#  //设置背景图片拉伸
+background: [<bg-layer>,]*<final-bg-layer>
+<bg-layer> == <bg-image>||<position>[/<bg-size>]?||<repeat-style>||<attachment>||<box>||<box>
+<final-bg-layer> == <bg-layer>||<'background-color'>
+```
