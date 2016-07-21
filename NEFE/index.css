@@ -1,0 +1,55 @@
+/* 利用伪元素设置背景图标 */
+.nav ul li a:before{
+	content: '';
+	display: block;
+	width: 40px;
+	height: 40px;
+	background: url(nav.png) no-repeat;
+}
+
+/* 背景图标定位 */
+.nav li.mxzb a:before{
+	background-position: 0 0;
+}
+.nav li.yygs a:before{
+	background-position: -40px -40px;
+}
+.nav li.qgyz a:before{
+	background-position: 0 -80px;
+}
+.nav li.ylbg a:before{
+	background-position: 0 -120px;
+}
+.nav li.gbj a:before{
+	background-position: 0 -160px;
+}
+.nav li.tkx a:before{
+	background-position: 0 -200px;
+}
+.nav li.xsqy a:before{
+	background-position: 0 -240px;
+}
+.nav li.ysdw a:before{
+	background-position: 0 -280px;
+}
+.nav li.rwls a:before{
+	background-position: 0 -320px;
+}
+.nav li.lzlx a:before{
+	background-position: 0 -360px;
+}
+.nav li.wy a:before{
+	background-position: 0 -400px;
+}
+.nav li.et a:before{
+	background-position: 0 -440px;
+}
+.nav li.dm a:before{
+	background-position: 0 -480px;
+}
+.nav li.fc a:before{
+	background-position: 0 -520px;
+}
+.nav li.yszb a:before{
+	background-position: 0 -560px;
+}
