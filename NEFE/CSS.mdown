@@ -117,3 +117,32 @@ background: [<bg-layer>,]*<final-bg-layer>
 <bg-layer> == <bg-image>||<position>[/<bg-size>]?||<repeat-style>||<attachment>||<box>||<box>
 <final-bg-layer> == <bg-layer>||<'background-color'>
 ```
+
+##### 布局
+```
+display: block|inline|inline-block|none
+```
+* block
+	* 默认宽度为父元素宽度
+	* 宽高可设
+	* 换行显示
+* inline
+	* 默认宽度为元素宽度
+	* 宽高不可设
+	* 行内元素，同行显示
+* inline-block
+	* 默认宽度为元素宽度
+	* 宽高可设
+	* 同行显示，整块换行
+* `display: none`与`visiability: hidden`不同至于后者只是不可见，在文档流中仍占位置
+* IE8以下版本`inline-block`属性兼容性：IE6/7支持inline元素的inline-block属性，IE6/7不支持block元素的inline-block属性，解决方法：
+	* 方法1：先使用display:inline-block属性触发block元素，然后再定义display:inline，让block元素呈现为inline对象，两个属性要分别放在两个CSS声明中。  
+		```
+		ul li{display:inline-block;}
+		ul li{*display:inline;}
+		```
+	* 方法2：直接让块元素设置为内联对象呈递（设置属性display:inline），然后触发块元素的layout（如：zoom:1 等）  
+		```
+			ul li{ display:inline-block; _zoom:1;_display:inline;}  /*    推荐IE6    */  
+			ul li{ display:inline-block; *zoom:1;*display:inline;}  /*    推荐IE6/7    */
+		```
