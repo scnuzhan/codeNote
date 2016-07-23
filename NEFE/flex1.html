@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>flex1</title>
+	<style>
+	html, body, .parent{
+		margin: 0;
+		height: 200px;
+	}
+	.parent{
+		display: flex;
+		color: white;
+		text-align: center;
+		line-height: 200px;
+	}
+	.side{
+		background-color: red;
+		width: 200px;
+	}
+	.main{
+		background-color: blue;
+		margin-left: 10px;
+		flex: 1;
+	}
+	</style>
+</head>
+<body>
+	<div class="parent"> 
+    <div class="side">侧栏</div>
+    <div class="main">主栏</div>
+</body>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>pop</title>
+	<style>
+	.pop{
+		width: 302px;
+		box-sizing: boeder-box;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		/*margin-left: -151px;*/
+		transform: translate(-50%, -50%);
+		z-index: 999;
+	}
+	.title{
+		padding: 0 20px;
+		height: 40px;
+		font: 14px/40px "microsoft yahei";
+		overflow: hidden;
+		white-space: nowrap;
+		-ms-text-overflow: ellipsis;
+		text-overflow: ellipsis;
+		background-color: #eee;
+	}
+	.content{
+		margin: 20px;
+		background-color: #fff;
+		font: 12px "songti";
+	}
+	.content p{
+		margin: 20px;
+		line-height: 1.5;
+		}
+	button{
+		margin: 0 auto;
+		width: 80px;
+		height: 30px;
+		background-color: blue;
+		color: white;
+		text-align: center;
+		border-radius: 5px;
+		padding: 0;
+		border: 0;
+		display: block;
+	}
+	div img{
+		width: 10px;
+		height: 10px;
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		cursor: pointer;
+	}
+	</style>
+</head>
+<body>
+	<div class="pop">
+		<div class="title">
+			标题栏
+			<img src="https://avatars2.githubusercontent.com/u/11023540">
+			<!-- <img src="../x.png"> -->
+		</div>
+		<div class="content">
+			<p>内容段落</p>
+			<button>确定</button>
+		</div>
+	</div>
+</body>
+</html>
