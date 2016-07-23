@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tab</title>
+	<style>
+	.content{
+		width: 720px;
+		height: 200px;
+	}
+	nav li {
+		list-style: none;
+		float: left;
+		width: 240px;
+		height: 40px;
+		background-color: #ddd;
+		text-align: center;
+		line-height: 40px;
+		border: solid 2px gray;
+		box-sizing: border-box;
+	}
+	.t-kc{
+		background-color: #fff;
+		border-bottom: none;
+	}
+	.t-kc, .t-xxjh{
+		border-right: none;
+	}
+	.kc, .xxjh, .jntu{
+		padding: 20px 0 0 20px;
+		border: solid 2px gray;
+		border-top: none;
+		height: 100%;
+	}
+	.xxjh, .jntu{
+		display: none;
+	}
+	.clearfix:after{
+        content: ".";
+        display: block;
+        clear: both;
+        height: 0;
+        overflow: hidden;
+        visibility: hidden;
+    } 
+	</style>
+</head>
+<body>
+	<div class="content">
+		<nav class="clearfix">
+			<li class="t-kc">课程</li>
+			<li class="t-xxjh">学习计划</li>
+			<li class="t-jntu">技能图谱</li>
+		</nav>
+		<div class="kc">课程内容</div>
+		<div class="xxjh">学习计划内容</div>
+		<div class="jntu">技能图谱内容</div>
+	</div>
+</body>
+</html>
