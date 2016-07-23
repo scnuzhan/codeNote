@@ -118,7 +118,9 @@ background: [<bg-layer>,]*<final-bg-layer>
 <final-bg-layer> == <bg-layer>||<'background-color'>
 ```
 
-##### 布局
+#### 布局
+
+##### display
 ```
 display: block|inline|inline-block|none
 ```
@@ -146,3 +148,51 @@ display: block|inline|inline-block|none
 			ul li{ display:inline-block; _zoom:1;_display:inline;}  /*    推荐IE6    */  
 			ul li{ display:inline-block; *zoom:1;*display:inline;}  /*    推荐IE6/7    */
 		```
+* 主体水平居中：`.content{margin: 0 auto}`
+* 居中导航：`ul{text-align: center}`
+
+##### position
+* top, right, bottom, left, z-index-设置位置
+* `position: static|relative|absolute|fixed`
+	* relative：仍在文档流中，参照物为本身，主要用于作为absolute的参照物
+	* absolute：脱离文档流，默认宽度为内容宽度，参照物为第一个定位祖先/根元素
+	* fixed：脱离文档流，默认宽度为内容宽度，参照物为视窗
+* 应用：轮播头图、固定顶栏、遮罩、三行自适应
+
+##### float
+* `float: left|right`
+	* 默认宽度为内容宽度
+	* 本脱离文档流，对后续元素脱离文档流，对后续内容仍在文档流中
+	* 向指定方向一直流动
+* `clear: both|left|right`
+	* 应用于后续块级元素
+	* 一般有两种方法：1. 空白元素法；2.clearfix法
+* 空白元素法，在浮动元素后边设置一个空白元素，如：`<br class="cb">`，在应用样式`.cb{clear: both;height: 0;overflow: hidden;visiability: hidden;}`
+* clearfix法，在浮动元素的父元素应用样式`.clearfix:after{content: '.';display: block;clear: both;height: 0;overflow: hidden; visiability: hidden;}`
+* 应用：两列布局
+
+##### flex
+* flex布局，多行自适应，多列自适应，间隔自适应，任意对齐
+* 创建flex container，设置元素属性`display: flex`，flex container弹性容器里在文档流中的直接子元素即为flex item
+
+###### 方向
+```
+flex-direction: row|row-reserve|column|column-reserve
+flex-wrap: nowrap|wrap|wrap_reserve
+flex-flow: <'flex-direction'>||<'flex-reserve'>
+order: <interger>    //initial: 0
+```
+###### 弹性
+```
+flex-grow: <number>    //initial: 0，flex-item实际宽度为flex-basis+flex-grow/sum(flex-grow)*remain
+flex-shrink: <number>    //initial: 1，flex-item实际宽度为flex-basis+flex-shrink/sum(flex-shrink)*remain
+flex-basis: main-size|<width>    //设置flex item的初始宽/高
+flex: <'flex-grow'>||<'flex-shrink'>||<'flex-basis'>    //initial: 0, 1, main-size
+```
+###### 对齐
+```
+justify-content: flex-start|flex-end|center|space-between|space-around    //设置main-axis对齐方式（与text-align类似），当没有设置弹性因子flex-grow时可用
+align-items: flex-start|flex-end|center|baseline|strecth    //设置cross-axis对齐方式（vertical-align）
+align-self: auto|flex-start|flex-end|center|baseline|strecth    //设置单个flex-item的cross-axis对齐方式（vertical—align）
+align-content: flex-start|flex-end|center|space-between|space-around|strecth    //设置cross-axis上行对齐方式
+```
