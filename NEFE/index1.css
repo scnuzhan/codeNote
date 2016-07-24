@@ -1,0 +1,165 @@
+/* 重置 */
+*{
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+}
+/* 文档设置 */
+body{
+	font: 12px/18px simsun;
+	background-color: #f5f5f5;
+}
+/* 链接设置 */
+a{
+	text-decoration: none;
+}
+/* 主体框架 */
+.content{
+	width: 900px;
+	background-color: #fff;
+	margin: 0 auto;
+	padding: 40px;
+	border: 1px solid #d3d3d3;
+}
+/* 导航栏 */
+.nav{
+	margin-bottom: 40px;
+}
+.nav ul{
+	margin: -25px 0 0 -33px;
+}
+.nav ul li{
+	float: left;
+	margin: 25px 0 0 33px;
+}
+.nav ul li a{
+	display: block;
+	width: 66px;
+	height: 66px;
+	color: #888;
+	text-align: center;
+	border: 2px solid transparent;
+	border-radius: 3px;
+}
+.nav ul li a:hover{
+	background-color: #f6f7f7;
+}
+.clearfix:after{
+	content: '';
+	display: block;
+	clear: both;
+	height: 0;
+	overflow: hidden;
+	visibility: hidden;
+}
+/* 选中状态 */
+.nav ul li.selected a, .nav ul li.selected a:hover{
+	border-color: #db5e5e;
+	color:#d35757;
+	background-color: #fff;
+}
+
+/* 利用伪元素设置背景图标 */
+.nav ul li a:before{
+	content: '';
+	display: block;
+	width: 40px;
+	height: 40px;
+	margin: 8px auto 0;
+	background: url(nav.png) no-repeat;
+}
+
+/* 背景图标定位 */
+.nav li.mxzb a:before{
+	background-position: 0 0;
+}
+.nav li.yygs a:before{
+	background-position: -40px -40px;
+}
+.nav li.qgyz a:before{
+	background-position: 0 -80px;
+}
+.nav li.ylbg a:before{
+	background-position: 0 -120px;
+}
+.nav li.gbj a:before{
+	background-position: 0 -160px;
+}
+.nav li.tkx a:before{
+	background-position: 0 -200px;
+}
+.nav li.xsqy a:before{
+	background-position: 0 -240px;
+}
+.nav li.ysdw a:before{
+	background-position: 0 -280px;
+}
+.nav li.rwls a:before{
+	background-position: 0 -320px;
+}
+.nav li.lzlx a:before{
+	background-position: 0 -360px;
+}
+.nav li.wy a:before{
+	background-position: 0 -400px;
+}
+.nav li.et a:before{
+	background-position: 0 -440px;
+}
+.nav li.dm a:before{
+	background-position: 0 -480px;
+}
+.nav li.fc a:before{
+	background-position: 0 -520px;
+}
+.nav li.yszb a:before{
+	background-position: 0 -560px;
+}
+
+/* 优秀新电台 */
+h2{
+	padding: 10px;
+	border-bottom: 2px solid #c20c0c;
+	font-size: 24px;
+}
+.newlist ul{
+	margin-right: -37px;
+	line-height: 18px;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+.newlist ul li{
+	margin: 10px 37px 40px 0;
+	float: left;
+	width: 150px;
+}
+.newlist ul li a{
+	color: #333;
+	font-size: 14px;
+}
+.newlist ul li a:hover{
+	text-decoration: underline;
+}
+.newlist ul li p{
+	color: #999;
+}
+
+
+/* 作者图标 */
+.author a:before{
+	content: '';
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	background: url(icon.png) no-repeat;
+}
+.author i:before{
+	content: '';
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	background: url(icon.png) no-repeat;
+	background-position: 0 -20px;
+}
