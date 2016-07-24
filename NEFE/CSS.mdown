@@ -196,3 +196,11 @@ align-items: flex-start|flex-end|center|baseline|strecth    //设置cross-axis�
 align-self: auto|flex-start|flex-end|center|baseline|strecth    //设置单个flex-item的cross-axis对齐方式（vertical—align）
 align-content: flex-start|flex-end|center|space-between|space-around|strecth    //设置cross-axis上行对齐方式
 ```
+
+##### 变形
+* `transform: none|<transform-function>+`
+* <transform-function>
+	* 旋转：`rotate(<angle>)`
+	* 平移：`translate(<translation-value>[,<translation-value>]?)`    //translateX()/translateY()
+	* 缩放：`scale(<number>[,<number>]?)`    //第二个值若缺省则为与第一个值相等，scaleX()/scaleY()
+	* 倾斜：`skew(<angle>[,<angle>]?)    //skewX()/skewY()
