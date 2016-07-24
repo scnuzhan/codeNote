@@ -49,7 +49,7 @@ font-family: [<family-name>|<generic-family>]#
 font-weight: normal|bold
 font-style: normal|italic
 line-height: normal|<number>|<length>|<percentage>
-font: [[<font-style>||<font-weight>]?<font-size>[/<line-height>]?<font-family>]
+font: [[<font-style>||<font-weight>]?<font-size>[/<line-height>]?<font-family>]    //字体大小与字体类型为必填项，缺一即失效
 ```
 
 ##### 对齐
@@ -58,8 +58,8 @@ text-align: left|right|center|justfiy
 vertical-align: baseline|sub|super|top|text-top|middle|bottom|text-bottom|<percentage>|<length>
 text-indent: <length>|<percentage>  //首行缩进
 white-space: normal|nowrap|pre|pre-wrap|pre-line  //格式化
-word-wrap: normal|break-word  //长单词换行
-word-break:normal|break-all  //拆分单词
+word-wrap: normal|break-word  //长单词换行，必须设置行宽
+word-break:normal|break-all  //拆分单词，必须设置行宽
 text-shadow: none|[<length>{2,3}&&<color>?]#
 text-decoration: none|[underline||overline||line-through]
 text-overflow: clip|ellipsis //必须要先设置overflow: hidden与white-space: nowrap才有效
