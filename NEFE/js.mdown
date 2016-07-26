@@ -1,0 +1,27 @@
+## js基础
+
+#### 基本类型
+* Number：整数、浮点数、特殊值NaN/Infinity（无限大）
+* String：单引号或双引号引起来的内容
+* Boolean：true、false
+* Object：一组无序的键值对
+* Null：null，空对象
+* Undefined：undefined（已声明但未赋值的变量、获取对象不存在的属性）
+
+#### 类型识别：typeof
+
+#### 原始类型和引用类型
+* 原始类型：Number、String、Boolean、Undefined、Null
+* 引用类型：Object
+
+#### 操作符与表达式
+* 一元操作符：++  --
+* 算数操作符：+  -  *  /  %
+* 关系操作符：>  <  >=  <=
+* 相关操作符：==  !=  ===  !==
+* 逻辑操作符：!  &&  ||
+* 赋值操作符：=
+* 条件操作符：? : 
+* 逗号操作符：,
+* 对象操作符：new  delete  .  []  instanceof  in
+* 位操作符：~  &  |  ^  <<  >>  >>>
