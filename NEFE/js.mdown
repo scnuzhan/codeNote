@@ -25,3 +25,39 @@
 * 逗号操作符：,
 * 对象操作符：new  delete  .  []  instanceof  in
 * 位操作符：~  &  |  ^  <<  >>  >>>
+
+#### 语句
+* `for(属性名 in 对象){ 语句 }`：遍历对象的属性
+* `with(表达式){ 语句 }`：给语句指定对象
+*异常捕获语句
+```
+try{
+	语句
+} catch(exception){      //(error)
+	语句                 //console.log(error)
+} finally{
+	语句
+}
+```
+
+#### 数值
+* 绝对值：`Math.abs(x)`
+* 四舍五入：`Math.round(x)`
+* 向上取整：`Math.ceil(x)`
+* 向下取整：`Math.floor(x)`
+* 取最大值：`Math.max([value1[,value2[, ...]]])`
+* 取最小值：`Math.mini([value1[,value2[, ...]]])`
+* 取[0, 1)随机数：`Math.random()`
+* Math.cos(x), Math.exp(x), Math.log(x), Math.sqrt(x), Math.pow(x, y)
+* 字符串转整型数值：
+```
+parseInt('1.1')    // 1
+parseInt('1.9')    // 1
+parseInt('1b2.4')    // 1
+parseInt('www')    // NaN
+```
+* 字符串转浮点型数值：parseFloat(string)    `parseFloat(12.4b5)    // 12.4`
+* 字符串转化数值：Num(value)    `Number(14.4b5)    // 出现非数字输出NaN`
+* 字符串转数值并设置保留小数点数位，num.toFixed(digits)    `(100.123).toFixed(2)    // "100.12"，结果为字符串
+
+#### 字符串
