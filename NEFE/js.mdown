@@ -61,3 +61,63 @@ parseInt('www')    // NaN
 * 字符串转数值并设置保留小数点数位，num.toFixed(digits)    `(100.123).toFixed(2)    // "100.12"，结果为字符串
 
 #### 字符串
+* `str.length`：字符串长度
+* `str.charAt(index)`：获取某一索引的字符值
+* `str.indexOf(searchValue[,fromIndex])`：寻找某一个字符串的索引值（只返回第一个），不存在返回-1
+* `str.search(regexp)`：按照规则寻找字符串，返回索引值
+* `str.match(regexp)`：寻找规则的字符，返回数组，不存在返回null
+* `str.replace(regexp|substr, newSubstr|function)`：替换字符串
+* `str.substring(indexA[,indexB])`：从某一索引值开始截取字符串，[indexA, indexB)
+* `str.slice(beginSlice[,endSlice])`：从某一索引值开始截取字符串，参数可以为负值，-1表示倒数第一个
+* `str.substr(start[,length])`：从某一索引值开始截取字符串，第二个可选参数为长度
+* `str.split([sepatator][,limit])`：匹配规则截断字符串，返回数组，第二个可选参数为输出个数限制
+* `str.toLowercase()`：转换成小写
+* `str.toUppercase()`：转换成大写
+* `+`：字符串连接
+* `String()`：转换成字符串
+* `\`：转义
+
+#### 对象
+* 创建对象
+	* `var car = new Object()`
+	* `var car = {}`
+* 添加、删除属性与方法
+	* `car.type = 'SUC'`
+	* `car.stop = function(){...}`
+	* `delete car.color`
+* `obj.constructor`：对象构造函数
+* `obj.toString()`：把对象转成字符串
+* `obj.valueOf()`：获取对象原始值
+* `obj.hasOwnproperty()`：检查对象是否自有某属性，返回布尔值
+
+#### 数组
+* 创建数组
+	* `var array = new Array()`
+	* `var array = []`
+* `arr.length`：数组长度
+* `arr[index]`：按索引值获取元素
+* `arr.indexOf(searchElement[,fromIndex])`：查找元素的索引值
+* `arr.forEach(callback[,thisArg])`：调用回调函数遍历数组，第二个可选参数为指定this指向，回调函数callback`function callback(item, index, array){}`
+* `arr.reserve()`：倒序数组
+* `arr.sort([compareFunction])`：排序数组
+* `arr.push(element1, ... elementN)`：向数组队尾添加元素
+* `arr.unshift(element)`：向队首添加元素
+* `arr.shift()`：获取队首第一个元素并将其从数组中删除
+* `arr.pop()`：获取队尾元素并将其从数组中删除
+* `arr.splice(index, howMany[,ele1[, ...[eleN]]])`：第一个index表示从第几个元素开始删，第二个参数howMany表示删多少个，第三个参数为插回去的元素，howMany为0时，往前插入（在index前插入新元素）
+* `arr.slice(begin[,end])`：拷贝数组，[begin, end)，第二个参数缺省时表示从begin拷贝到末尾
+* `arr.concat(value1, ... valueN)`：连接数组
+* `arr.join([separator])`：将数组连接成字符串
+* `arr.map(callback[,thisArg])`：调用回调函数遍历数组并生成新数组
+* `arr.reduce(callback[,initialValue])`：回调函数callback`function callback(previousResult, item, index, array){}`
+```
+var students = [
+	{id:1,score:80},
+	{id:2,score:50},
+	{id:3,score:70}
+];
+var sum = function(previousResult,item,index,array){
+	return previousResult+item.score;
+};
+students.reduce(sum,0);  // 200
+```
