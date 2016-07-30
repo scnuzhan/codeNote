@@ -121,3 +121,79 @@ var sum = function(previousResult,item,index,array){
 };
 students.reduce(sum,0);  // 200
 ```
+
+#### 函数
+* 参数列表数组 `arguments`
+* 参数为原始类型：值传递，参数为对象类型：引用传递
+* 作用域：变量起作用的范围
+
+#### 日期Date()
+* 创建日期
+	* 当前时间：`var date = new Date()`
+	* 传参设置时间：`new date(year[,month[,day[minutes[,seconds[,milliseconds]]]]])`
+* 获取时间：date.getXXX()
+	* `date.getFullYear()`
+	* `date.getMonth()`
+	* `date.getDate()`
+	* `date.getHours()`
+* 格式化时间
+```
+function format(date){
+	return date.getFullYear()+'-'+padding(date.getMonth()+1)+'-'+padding(date.getDate())+' '+padding(date.getHours())+':'+padding(date.getMinutes())+':'+padding(date.getSeconds())
+}
+
+function padding(time){
+	return time>9?time:('0'+time)
+}
+```
+* 设置时间：date.setXXX()
+	* date.setFullYear()
+	* date.setMonth()
+	* date.setDate()
+	* date.setHours()
+	* date.setMinutes()
+	* date.setSeconds()
+* 某个月的第0天相当于上一个月的最后一天，以此获取每个月的天数
+```
+function getDays(year, month){
+	var date = new Date(year, month, 0)
+	return date.getDate()
+}
+```
+* Date转化成Number：`date.getTime()`  距1970年1月1日00:00:00的毫秒数
+* Number转换成Date：`date.setTime(time)`或者`new Date(time)`
+
+#### 正则表达式regular expression
+* 正则表达式：描述字符串规则的表达式
+* 创建方法
+	* `/pattern/attrs`
+	* `new RegExp(pattern, attrs)`
+* `regexpObj.test(str)`：测试正则表达式与指定字符串是否匹配
+* 锚点：匹配一个位置
+	* `^`：行起始位置
+	* `$`：行结束位置
+	* `\b`：单词边界
+* 字符
+	* `.`：任一字符（换行符除外）
+	* `\d`或`[0-9]`：一个数字
+	* `\D`等价于`[^\d]`与`[^0-9]`：一个非数字字符
+	* `\s`：空白符
+	* `\w`等价于`[A-Za-z0-9]`：一个字母或者数字字符
+	* `\`：转义字符
+* 量词：字符出现的次数
+	* `{m}`：m次
+	* `{m, n}`：m到n次
+	* `*`：任意次
+	* `?`：0次或1次
+	* `+`：1次或1次以上
+* 属性
+	* `g`：global，全局属性
+	* `i`：不区分大小
+* 多选分支，`/\.(png|jpg|jpge|gif)/
+* 捕获：保存匹配到的字符串，`()`捕获，`(?:)`不捕获，捕获的结果存在`$1`, `$2`...
+
+#### JSON  JavaScript Object Notaion
+* JSON转JS：`JSON.parse(text[,reviver])`
+* JS转JSON：`JSON.stringfy(value[,replacer[,space]])`
+
+
