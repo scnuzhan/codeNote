@@ -23,13 +23,13 @@
 * 赋值操作符：=
 * 条件操作符：? : 
 * 逗号操作符：,
-* 对象操作符：new  delete  .  []  instanceof  in
+* 对象操作符：`new`  `delete`  `.`  `[]`  `instanceof`(变量是否是对象的实例)  `in`(属性是否在对象中)
 * 位操作符：~  &  |  ^  <<  >>  >>>
 
 #### 语句
 * `for(属性名 in 对象){ 语句 }`：遍历对象的属性
 * `with(表达式){ 语句 }`：给语句指定对象
-*异常捕获语句
+* 异常捕获语句
 ```
 try{
 	语句
@@ -82,7 +82,7 @@ parseInt('www')    // NaN
 	* `var car = new Object()`
 	* `var car = {}`
 * 添加、删除属性与方法
-	* `car.type = 'SUC'`
+	* `car.type = 'SUV'`
 	* `car.stop = function(){...}`
 	* `delete car.color`
 * `obj.constructor`：对象构造函数
