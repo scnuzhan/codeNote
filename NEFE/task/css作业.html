@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>css作业</title>
+	<style>
+		html, body, .parent, .side, .main{
+			height: 100%;
+		}
+		.side{
+			width: 200px;
+			float: left;
+			background-color: red;
+		}
+		.main{
+			width: 800px;
+			margin-left: 210px;
+			background-color: blue;
+		}
+		h1{
+			width: 200px;
+			font: bold 16px/25px "songti";
+			color: #000;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+		.slide{
+			width: 200px;
+			height: 100px;
+			position: relative;
+		}
+		.pointer{
+			position: absolute;
+			bottom: 10px;
+			right: 10px;
+		}
+		.pointer i{
+			display: inline-block;
+			width: 10px;
+			height: 10px;
+			background-color: #000;
+			margin-left: 5px;
+			border-radius: 5px;
+		}
+		i.current{
+			background-color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<h1>标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字标题文字</h1>
+	<div class="parent"> 
+	    <div class="side">侧栏</div>
+	    <div class="main">主栏</div>
+	</div>
+	<div class="slide">
+		<!-- 图片省略 -->
+		<!-- 以下是指示器 -->
+		<div class="pointer"><i class="current"></i><i></i><i></i></div>
+	</div>
+</body>
+</html>

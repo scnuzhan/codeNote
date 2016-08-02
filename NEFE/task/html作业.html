@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>html作业</title>
+</head>
+<body>
+	<aside>
+		<h2>图书畅销榜</h2>
+		<ol>
+			<li>当我足够好，才会遇见你</li>
+			<li>皮囊</li>
+			<li>李光耀论中国与世界</li>
+			<li>乖，摸摸头</li>
+			<li>男女内参</li>
+		</ol>
+	</aside>
+<table>
+	<caption>运费详情</caption>
+	<thead>
+		<tr>
+			<th>区域</th>
+			<th>寄达地</th>
+			<th>首重（元/1000g）</th>
+			<th>续重（元/1000g）</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th rowspan=2>一区</th>
+			<td>浙江、上海、江苏</td>
+			<td>6</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<td>江西、安徽</td>
+			<td>7</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<th>二区</th>
+			<td>吉林、黑龙江、云南</td>
+			<td>10</td>
+			<td>6</td>
+		</tr>
+		<tr>
+			<th>三区</th>
+			<td>新疆、西藏</td>
+			<td>15</td>
+			<td>10</td>
+		</tr>
+	</tbody>
+</table>
+<br>
+<form action=" " method=" ">
+	<label for="avatar">头像</label>
+	<input type="file" name="image" id="avatar">
+	<label for="nickname">昵称</label>
+	<input type="text" name="nickname" id="nickname">
+	<label for="education">学历</label>
+	<select name="education" id="education">
+		<option value="0">大专</option>
+		<option value="1">本科</option>
+	</select>
+	<div>
+		<span>性别</span>
+		<label for="male"><input type="radio" id="male" name="gender" value="男" checked="checked">男</label>
+		<label for="female"><input type="radio" id="female" name="gender" value="女">女</label>
+	</div>
+	<div>
+		<span>爱好</span>
+		<label for="movie"><input type="checkbox" id="movie" checked>电影</label>
+		<label for="photo"><input type="checkbox" id="photo">摄影</label>
+		<label for="music"><input type="checkbox" id="music">音乐</label>
+		<label for="read"><input type="checkbox" id="read" checked>阅读</label>
+	</div>
+	<label for="signature">签名</label>
+	<textarea name="signature" id="signature" cols="50" rows="8"></textarea>
+	<button type="submit">保存</button>
+</form>
+</body>
+</html>

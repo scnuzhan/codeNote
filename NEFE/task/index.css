@@ -1,0 +1,24 @@
+.image{
+	float: left;
+	width: 100px;
+	height: 100px;
+}
+.news{
+	margin-left: 115px;
+	height: 100px;
+	overflow: hidden;
+}
+.news h2{
+	font: bold 16px/25px "songti";
+	color: black;
+	margin: 0 auto;
+	overflow: hidden;
+	white-space: nowrap;
+	-ms-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+}
+.news p{
+	font: 14px/25px "songti";
+	color: #666;
+	margin: 0 auto;
+}
