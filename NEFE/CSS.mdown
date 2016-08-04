@@ -23,12 +23,12 @@ input:checked{...}
 :nth-child(even)
 :nth-child(3n+1)
 :nth-last-child(3n+1)
-:only-child()
-:first-of-type()
-:last-of-type()
+:only-child{...}
+:first-of-type{...}
+:last-of-type{...}
 :nth-of-type(even)  
 :nth-last-of-type(even)
-:only-of-type()  //代表了任意一个元素，这个元素没有其他相同类型的兄弟元素。
+:only-of-type{...}  //代表了任意一个元素，这个元素没有其他相同类型的兄弟元素。
 ```
 * 伪元素选择器
 ```
@@ -39,12 +39,12 @@ input:checked{...}
 ::selection
 ```
 * `.main + h2 {...}`：类`.main`后的第一个`<h2>`兄弟标签
-* `.mian ~ p {...}`：类`.main`后的全部`<h2>`兄弟标签
+* `.mian ~ p {...}`：类`.main`后的全部`<p>`兄弟标签
 * 非继承属性可以通过属性`inherit`使其变成继承属性
 
 ##### 文本
 ```
-font-size: <length>|<percentage>|<absolute-size>|<relative-size>`
+font-size: <length>|<percentage>|<absolute-size>|<relative-size>
 font-family: [<family-name>|<generic-family>]#
 font-weight: normal|bold
 font-style: normal|italic
@@ -73,7 +73,7 @@ cursor: [<url>,]*[auto|default|none|help|pointer|zoom-in|zoom-out|move]
 |   nowrap   |    Collapse   |      Collapse     |      No wrap      |
 |    pre     |    Preserve   |      Preserve     |      No wrap      |
 |  pre-warp  |    Preserve   |      Preserve     |        wrap       |
-|  pre_line  |    Preserve   |      Collapse     |        wrap       |
+|  pre-line  |    Preserve   |      Collapse     |        wrap       |
 
 * 文本/颜色属性大多都可以通过设置`inherit`属性来继承父辈元素属性
 
@@ -103,7 +103,7 @@ outline:[<outline-width>||<outline-style>||<outline-color>]|inherit  //盒模型
 background-color: <color>|transparent
 background-image: [<image>|none]#
 background-repeat: [repeat-x|repeat-y|[repeat|space|round|no-repeat]{1,2}]#
-background-attachment: [scroll|fixed|local]#  //背景图片是否滚动
+background-attachment: [scroll|local|fixed]#  //背景图片是否滚动，scroll默认值不滚动，local滚动，fixed与视窗固定
 background-position: <position>#
 linear-gradient([[<angle|to <side-or-corner>],]?<color-stop>[,<color-stop>]+)
 <side-or-corner> == [left|right]||[top|bottom]
@@ -136,7 +136,7 @@ display: block|inline|inline-block|none
 	* 默认宽度为元素宽度
 	* 宽高可设
 	* 同行显示，整块换行
-* `display: none`与`visiability: hidden`不同至于后者只是不可见，在文档流中仍占位置
+* `display: none`与`visiability: hidden`不同之处在于后者只是不可见，在文档流中仍占位置
 * IE8以下版本`inline-block`属性兼容性：IE6/7支持inline元素的inline-block属性，IE6/7不支持block元素的inline-block属性，解决方法：
 	* 方法1：先使用display:inline-block属性触发block元素，然后再定义display:inline，让block元素呈现为inline对象，两个属性要分别放在两个CSS声明中。  
 		```
@@ -148,6 +148,7 @@ display: block|inline|inline-block|none
 			ul li{ display:inline-block; _zoom:1;_display:inline;}  /*    推荐IE6    */  
 			ul li{ display:inline-block; *zoom:1;*display:inline;}  /*    推荐IE6/7    */
 		```
+
 * 主体水平居中：`.content{margin: 0 auto}`
 * 居中导航：`ul{text-align: center}`
 
@@ -204,3 +205,18 @@ align-content: flex-start|flex-end|center|space-between|space-around|strecth    
 	* 平移：`translate(<translation-value>[,<translation-value>]?)`    //translateX()/translateY()
 	* 缩放：`scale(<number>[,<number>]?)`    //第二个值若缺省则为与第一个值相等，scaleX()/scaleY()
 	* 倾斜：`skew(<angle>[,<angle>]?)    //skewX()/skewY()
+
+
+
+
+#### 后记
+* text-align定义块级元素行内内容水平对齐方式
+* vertical-align定义行内块级元素或表格单元格元素的垂直对齐方式
+* 居中一个块级元素且不居中他的行内内容的标准兼容方法是将它的左右margin设置为auto
+* 左右margin设为auto时只能应用块级元素，且块级元素有设置宽度
+* `display: block|inline|inline-block|none`
+* `position: static|relative|absolute|fixed`
+* top, right, bottom, left, z-index-设置位置（应用：轮播头图、固定顶栏、遮罩、三行自适应）
+* `float: left|right`
+* `.clearfix:after{content: '.';display: block;clear: both;height: 0;overflow: hidden; visiability: hidden;}`
+* `flex: <'flex-grow'>||<'flex-shrink'>||<'flex-basis'>    //initial: 0, 1, main-size`

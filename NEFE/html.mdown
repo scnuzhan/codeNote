@@ -4,11 +4,11 @@
 * 文档三个部分
 	* 文档声明：`<!Doctype html>`
 	* 文档头部：`<title>`标签，`<meta>`标签
-		* `<meta charset='utf-8'>`
-		* `<meta name='keywords' content=' '>`	`<meta name='description' content=' '>`
-		* `<meta name='viewport' content='width=device-width'>`
-		* `<link rel='shortcut icon' href='favicon.ico'>`	//网站图标
-		* `<link rel='stylesheet' href='../css/style.css'>`
+		* `<meta charset="utf-8">`
+		* `<meta name="keywords" content=" ">`	`<meta name="description" content=" ">`
+		* `<meta name="viewport" content="width=device-width">`
+		* `<link rel="shortcut icon" href="favicon.ico">`	//网站图标
+		* `<link rel="stylesheet" href="../css/style.css">`
 	* 文档主体：`<body>`
 
 #### 语法
@@ -17,7 +17,7 @@
 	* 标签闭合
 	* 一个或者多个属性值
 	* 标签课嵌套
-	* 注释：<!-- -->
+	* 注释：`<!-- -->`
 * 书写规范
 	* 标签名小写
 	* 属性值加双引号
@@ -29,9 +29,9 @@
 
 #### 文本标签
 * 超链接`<a>`
-	* 创建指向另一文档的链接，`<a href='163.com' target='_blank'>`，`target`属性可以设置`_blank`、`_self`、`inner`
-	* 创建指向文档内部的锚点，`<a href='#id'>`，文章内部对应章节应设置号id
-	* 创建指向Email的链接，`<a herf='mailto: 163@163.com,126@126.com?cc=188@188.com&subject=建议&body=body'>`
+	* 创建指向另一文档的链接，`<a href="163.com" target="_blank">`，`target`属性可以设置`_blank`、`_self`、`inner`
+	* 创建指向文档内部的锚点，`<a href="#id">`，文章内部对应章节应设置号id
+	* 创建指向Email的链接，`<a herf="mailto: 163@163.com,126@126.com?cc=188@188.com&subject=建议&body=body">`
 * `<em>`与`<strong>`有强调作用，`<i>`与`<b>`只有形式作用，不强调
 * 引用
 	* `<cite>`：引用出处，如作品名称
@@ -41,7 +41,7 @@
 	* `<pre>`：格式化文本使用，保留空格、换行
 
 #### 组标签
-* 分区<div>，段落<p>，列表<ul>/<ol>/<dl>
+* 分区`<div>`，段落`<p>`，列表`<ul>`/`<ol>`/`<dl>`
 * 自定义列表
 ```
 <dl>
@@ -52,7 +52,7 @@
 	<dd>列表描述</dd>
 </dl>
 ```
-* 有序列表属性：`<ol type='a' start='2'>`
+* 有序列表属性：`<ol type="a" start="2">`
 
 #### 资源标签
 * 图片标签：`<img src="../img.png" alt="...">`
@@ -109,6 +109,7 @@
 </select>
 ```
 * 多行文本框：`<textarea name="..." rows="4" id="..."></textarea>`
+* 提示信息：`<label for="#id">`，通过for属性绑定`<input>`标签
 * h5表单`<input>`标签新type属性：email、url、number、tel、search、rangle（调节条）、color（拾色器）、date picker（日历选择器）
 * 表单标签其他属性：checked、selected、disabled、placeholder、value（默认值）、readonly（只读）、hidden
 
