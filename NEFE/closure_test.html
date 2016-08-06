@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>closure test</title>
+</head>
+<body>
+	<h1>单击弹出列表项内容</h1>
+	<ul>
+		<li>p1</li>
+		<li>p2</li>
+		<li>p3</li>
+	</ul>
+<script>
+	/* 无法正常弹出，每一项都输出最后一项p3 */
+	// (function(){
+	// var els = document.getElementsByTagName('li');
+	// for(var i = 0, len = els.length; i < len; i++){
+	//     var el = els[i];
+	//     el.onclick = function(){
+	//         alert(el.innerHTML);
+	//     };
+	// }
+	// })();
+
+	/* 修改方法一 */
+	// (function(){
+	// var els = document.getElementsByTagName('li');
+	// for(var i = 0, len = els.length; i < len; i++){
+	//     var el = els[i];
+	//     el.onclick = function(){
+	//         alert(this.innerHTML);
+	//     };
+	// }
+	// })();
+
+	/* 修改方法二 */
+	(function(){
+	var els = document.getElementsByTagName('li');
+	for(var i = 0, len = els.length; i < len; i++){
+	    (function(el){
+	    	el.onclick = function(){
+	    	    alert(el.innerHTML);
+	    	};
+	    })(els[i])
+	}
+	})();
+
+	/* 修改方法三 */
+	// (function(){
+	// var els = document.getElementsByTagName('li');
+	// for(var i = 0, len = els.length; i < len; i++){
+	//     var el = els[i];
+	//     el.onclick = (function(x){
+	//     	return function(){ alert(x.innerHTML);}
+	//     })(el);
+	// }
+	// })();
+
+</script>
+</body>
+</html>
