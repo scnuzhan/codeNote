@@ -1,0 +1,182 @@
+## 《你不知道的JavaScript》读书笔记——this
+
+[参考：JavaScript中‘this’关键词的优雅解释](http://www.zcfy.cc/article/901)
+
+### 第一章 关于`this`
+
+#### 1.1 为什么要用`this`
+
+`this`提供了一种更优雅的方式来隐式“传递”一个对象引用，因此可以将API设计得更加简洁并且易于复用。
+```
+function identify() {
+	return this.name.toUpperCase();
+}
+
+function speak() {
+	var greeting = "Hello, I'm " + identify.call( this );
+	console.log( greeting );
+}
+
+var me = {
+	name: "Kyle"
+};
+
+var you = {
+	name: "Reader"
+};
+identify.call( me ); // KYLE
+identify.call( you ); // READER
+
+speak.call( me ); // Hello, 我是KYLE
+speak.call( you ); // Hello, 我是READER
+```
+这段代码可以在不同的上下文对象（`me`和`you`）中重复使用函数`identify()`和`speak()`，不用针对每个对象编写不同版本的函数。如果不使用`this`，那就需要给`identify()`和`speak()`显式传入一个上下文对象。
+
+#### 1.2 误解
+
+`this`既不指向函数自身也不指向函数的词法作用域
+
+#### 1.3 `this`到底是什么
+
+`this`实际上是在函数被调用时发生的绑定，它指向什么完全取决于函数在哪里被调用
+
+### 第二章 `this`全面解析
+
+在 ES5 中，`this`会随着**函数调用位置和调用方式**改变，这种变化无常给很多开发者带来过痛苦的经历。 ES6 通过箭头函数带来的词法作用域的`this`消除了这个问题。
+
+#### `this`绑定规则
+
+##### 默认绑定，函数调用
+
+纯粹的函数调用，函数执行的上下文是全局对象,`this`指向全局对象`window`
+```
+function sum(a, b) {
+	console.log(this === window); // => true
+	this.myNumber = 20; // add 'myNumber' property to global object
+	return a + b;
+}
+// sum() is invoked as a function
+// this in sum() is a global object (window)
+sum(15, 16);     // => 31
+window.myNumber; // => 20
+```
+
+`strict`模式下，函数调用中的`this`是`undefined`
+```
+function multiply(a, b) {
+ 'use strict'; // enable the strict mode
+  console.log(this === undefined); // => true
+  return a * b;
+}
+// multiply() function invocation with strict mode enabled
+// this in multiply() is undefined
+multiply(2, 5); // => 10
+```
+
+##### 隐式绑定，方法调用
+
+当一个表达式以属性访问的形式执行，即为方法调用，`this`指向拥有这个方法的对象
+```
+var calc = {
+	num: 0,
+	increment: function() {
+		console.log(this === calc); // => true
+		this.num += 1;
+		return this.num;
+	}
+};
+// method invocation. this is calc
+calc.increment(); // => 1
+calc.increment(); // => 2
+```
+
+###### 缺陷一：内部函数中的`this`
+内部函数的上下文依赖于调用方法，而不是外部函数的上下文。
+```
+var numbers = {
+	numberA: 5,
+	numberB: 10,
+	sum: function() {
+		console.log(this === numbers); // => true
+		function calculate() {
+			// this is window or undefined in strict mode
+			console.log(this === numbers); // => false
+			return this.numberA + this.numberB;
+		}
+		return calculate();
+	}
+};
+numbers.sum(); // => NaN or throws TypeError in strict mode
+```
+
+`numbers.sum()`是一个对象上的方法调用，所以`sum`中的上下文是`numbers`对象。`calculate`函数定义在`sum`内部，`calculate()`是一个函数调用（而不是方法调用），它的`this`是全局对象`window`或者strict模式下的`undefined`。即使外部函数`sum`的上下文是`numbers`对象，它在这里也没有影响。解决方法之一是使用`.call()`。
+
+###### 缺陷二：从object中分离方法
+
+将一个对象中的方法赋值给另一个变量。当用这个变量调用方法时，会变成函数调用：`this`变成全局对象`window`或者strict模式下的`undefined`。用绑定函数`.bind()`可以修正上下文，使它变成拥有这个方法的对象。
+```
+function Animal(type, legs) {
+	this.type = type;
+	this.legs = legs;
+	this.logInfo = function() {
+		console.log(this === myCat); // => false
+		console.log('The ' + this.type + ' has ' + this.legs + ' legs');
+	}
+}
+var myCat = new Animal('Cat', 4);
+// logs "The undefined has undefined legs"
+// or throws a TypeError in strict mode
+setTimeout(myCat.logInfo, 1000);
+```
+`myCat.logInfo`作为参数传递给`setTimout(myCat.logInfo)`时已经从原对象上分离了，1秒钟之后发生的是一个函数调用。
+
+
+##### 显式绑定，隐式调用
+
+当函数被`.call()`或者`.apply()`调用时，执行的是隐式调用。在隐式调用`.call()`或`.apply()`中，`this`指向第一个参数。
+```
+var rabbit = { name: 'White Rabbit' };
+function concatName(string) {
+	console.log(this === rabbit); // => true
+	return string + this.name;
+}
+// Indirect invocations
+concatName.call(rabbit, 'Hello ');  // => 'Hello White Rabbit'
+concatName.apply(rabbit, ['Bye ']); // => 'Bye White Rabbit'
+```
+
+##### new绑定，构造函数调用
+
+当`new`关键词紧接着函数对象被调用，执行的是构造函数调用，构造函数调用的上下文是新创建的对象，`this`指向新创建的对象。
+```
+function Foo () {
+	console.log(this instanceof Foo); // => true
+	this.property = 'Default Value';
+}
+// Constructor invocation
+var fooInstance = new Foo();
+fooInstance.property; // => 'Default Value'
+```
+
+`new Foo()`正在调用一个构造函数，它的上下文是`fooInstance`。其中，`Foo`被初始化了：`this.property`被赋予了一个默认值。
+
+同样的情况在用`class`语法（从ES6起）时也会发生，唯一的区别是初始化在`constructor`方法中进行：
+```
+class Bar {
+	constructor() {
+		console.log(this instanceof Bar); // => true
+		this.property = 'Default Value';
+	}
+}
+// Constructor invocation
+var barInstance = new Bar();
+barInstance.property; // => 'Default Value'
+```
+
+当`new Bar()`执行时，JavaScript创建了一个空的对象，把它作为`constructor`方法的上下文。现在，你可以用`this`关键词给它添加属性：`this.property = 'Default Value'`。
+
+##### this词法，ES6箭头函数
+
+`this`指向箭头函数定义时封装好的上下文。
+
+箭头函数会一劳永逸地绑定词法作用域。即使使用修改上下文的方法，`this`也不能被改变。
