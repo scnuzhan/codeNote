@@ -30,7 +30,7 @@
 #### 文本标签
 * 超链接`<a>`
 	* 创建指向另一文档的链接，`<a href="163.com" target="_blank">`，`target`属性可以设置`_blank`、`_self`、`inner`
-	* 创建指向文档内部的锚点，`<a href="#id">`，文章内部对应章节应设置号id
+	* 创建指向文档内部的锚点，`<a href="#id">`，文章内部对应章节应设置好id
 	* 创建指向Email的链接，`<a herf="mailto: 163@163.com,126@126.com?cc=188@188.com&subject=建议&body=body">`
 * `<em>`与`<strong>`有强调作用，`<i>`与`<b>`只有形式作用，不强调
 * 引用
