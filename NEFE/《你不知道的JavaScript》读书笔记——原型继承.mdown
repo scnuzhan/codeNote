@@ -69,3 +69,10 @@ Foo.prototype; // { }
 4. 绝大多数浏览器也支持一种非标准的方法来访问内部`[[Prototype]]`属性：  
 	`a.__proto__ === Foo.prototype; // true`
 
+
+
+#### 参考
+
+[从本质认识JavaScript的原型继承和类继承](https://www.h5jun.com/post/inherits)
+[原型继承机制的原理](https://github.com/24wangchen/study/issues/10)
+[原型继承](http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/0014344997013405abfb7f0e1904a04ba6898a384b1e925000)
