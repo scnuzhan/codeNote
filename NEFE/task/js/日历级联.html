@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<select name="year" id="year">
+	  <option value="0">--</option>
+	  <option value="1999">1999</option>
+	  <option value="2000">2000</option>
+	  <option value="2001">2001</option>
+	</select>年
+	<select name="month" id="month">
+	  <option value="0">--</option>
+	  <option value="1">1</option>
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	  <option value="5">5</option>
+	  <option value="6">6</option>
+	  <option value="7">7</option>
+	  <option value="8">8</option>
+	  <option value="9">9</option>
+	  <option value="10">10</option>
+	  <option value="11">11</option>
+	  <option value="12">12</option>
+	</select>月
+	<select name="date" id="date">
+	  <option value="0">--</option>
+	</select>日
+	<script>
+		var dateUpdate = function(event) {
+		  while(date.options.length > 1)
+		    date.remove(1);
+		  if(year.value == '0' || month.value == '0')
+		    return;
+		  var d = new Date(0);
+		  d.setFullYear(year.value);
+		  d.setMonth(month.value);
+		  d.setDate(0);
+		  for(var i=0;i<d.getDate();i++)
+		    date.add(new Option(i+1,i+1));
+		}
+
+		var monthUpdate = function(event) {
+		  while(month.options.length > 1)
+		    month.remove(1);
+		  if(year.value == '0')
+		    return;
+		  var monthMax = 12;
+		  for(var i=0;i<monthMax;i++)
+		    month.add(new Option(i+1,i+1));
+		}
+
+		year.addEventListener('change', monthUpdate);
+		year.addEventListener('change', dateUpdate);
+		month.addEventListener('change', dateUpdate);
+	</script>
+</body>
+</html>
