@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>实时公交查询</title>
+	<script src="http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js"></script>
+	<!--  CDN 读取失败的时候从自己服务器提供 -->
+	<script>
+	if (!window.jQuery) {
+		var script = document.createElement('script');
+		script.src = "/js/jquery.min.js";
+		document.body.appendChild(script);
+	}
+	</script>
+</head>
+<body>
+	<h1>实时公交查询</h1>
+	<!-- <form action="/bus/search" method="post">
+		<input type="text" name="search" placeholder="请输入路线关键字">
+		<button type="submit">搜索</button>
+	</form> -->
+	<div>
+		<input type="text" id="search" placeholder="请输入路线">
+		<button>搜索</button>
+		<p>返回数据：<span></span></p>
+	</div>
+	<script>
+		$(function(){
+			var routeName
+			$("#search").change(function(){
+				routeName = $(this).val()
+			})		
+			$("button").click(function(){
+				$.post("/bus/search", {name: routeName}, function(data){
+					$("p").append(data)
+				})
+			})
+		})
+	</script>
+</body>
+</html>
