@@ -19,7 +19,7 @@ function getByName(queryData){
 			'Content-Length': postData.length
 		}
 	};
-	var result;	// 用于储存post请求返回结果，使用promise的resolve方法传递给then函数
+	var result = '';	// 用于储存post请求返回结果，使用promise的resolve方法传递给then函数
 
 	var p = new Promise(function(resolve, reject){
 
@@ -29,12 +29,13 @@ function getByName(queryData){
 				console.log('HEADERS: ' + JSON.stringify(res.headers));
 				res.setEncoding('utf8');
 				res.on('data', function (chunk) {
-					result = chunk;
+					result += chunk;
+					// console.log('BODY: ' + chunk);
+				});
+				res.on('end', function(){
 					resolve(result);	// 将result的值传递给then方法的回调函数
-					console.log('BODY: ' + chunk);
 				});
 			} 
-
 		});
 
 		req.on('error', function(e) {

@@ -11,3 +11,5 @@ app.use('/', home);  // 主页
 app.use('/blog', blog);	// 博客
 app.use('/bus', bus); // 公交查询
 app.listen(3030);
+
+console.log("服务器启动成功，地址：127.0.0.1:3030");

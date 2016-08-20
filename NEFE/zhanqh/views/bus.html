@@ -20,21 +20,53 @@
 		<button type="submit">搜索</button>
 	</form> -->
 	<div>
-		<input type="text" id="search" placeholder="请输入路线">
-		<button>搜索</button>
-		<p>公交路线：<span></span></p>
+		<h2>根据线路或站点名称搜索</h2>
+		<input type="text" id="search" placeholder="请输入路线或站点">
+		<button id="searchNS">搜索</button>
+		<p>公交路线：<span id="getByName"></span></p>
+	</div>
+	<div>
+		<h2>根据路线ID与方向获取站点信息</h2>
+		<label for="routeId">路线ID</label>
+		<input type="text" id="routeId">
+		<label for="direction">上下行方向</label>
+		<input type="text" id="direction">
+		<button id="searchStation">查询</button>
+		<p>路线站点：<span id="routeStation"></span></p>
+		<p>实时公交位置：<span id="runBus"></span></p>
 	</div>
 	<script>
 		$(function(){
+			// getByName
 			var routeName
 			$("#search").change(function(){
 				routeName = $(this).val()
 			})		
-			$("button").click(function(){
-				$.post("/bus/search", {name: routeName}, function(data){
-					$("p").append(data)
+			$("button#searchNS").click(function(){
+				$.post("/bus/getByName", {name: routeName}, function(data){
+					$("#getByName").text(data)
 				})
 			})
+
+			// routeStation/getByRouteIdAndDirection
+			var routeId
+			var direction
+			$("#routeId").change(function(){
+				routeId = $(this).val()
+			})
+			$("#direction").change(function(){
+				direction = $(this).val()
+			})	
+			$("button#searchStation").click(function(){
+				$.post("/bus/routeStation/getByRouteIdAndDirection", {routeId: routeId, direction: direction}, function(data){
+					$("#routeStation").text(data)
+				})
+				$.post("/bus/runbus/getByRouteAndDirection", {routeId: routeId, direction: direction}, function(data){
+					$("#runBus").text(data)
+				})
+			})
+
+			// 
 		})
 	</script>
 </body>
