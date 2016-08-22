@@ -4,7 +4,7 @@ var base = require('./base')
 
 
 /* 通过路线名查找 */
-function getByName(queryData){
+function xxt_bus(queryData, path){
 	var params = base.createBase(queryData);
 
 	var postData = querystring.stringify(params);
@@ -12,7 +12,7 @@ function getByName(queryData){
 	var options = {
 		hostname: 'nxxtapi.gzyyjt.net',
 		port: '9009',
-		path: '/xxt_api/bus/getByName',
+		path: path,
 		method: 'post',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded',
@@ -51,4 +51,4 @@ function getByName(queryData){
 }
 
 
-exports.getByName = getByName;
+exports.xxt_bus = xxt_bus;
