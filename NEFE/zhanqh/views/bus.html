@@ -34,10 +34,15 @@
 		<button id="searchStation">查询</button>
 		<p>路线站点：<span id="routeStation"></span></p>
 		<p>实时公交位置：<span id="runBus"></span></p>
+		<label for="info">站点ID</label>
+		<input type="text" id="info">
+		<button id="getWaitTime">获取等待时间</button>
+		<p>等待时间<span id="waitTime"></span></p>
 	</div>
+	<a href="/bus/rs?routeId=401">测试</a>
 	<script>
 		$(function(){
-			// getByName
+			// getByName 根据线路或站点搜索
 			var routeName
 			$("#search").change(function(){
 				routeName = $(this).val()
@@ -48,7 +53,7 @@
 				})
 			})
 
-			// routeStation/getByRouteIdAndDirection
+			// 根据RouteId与Direction获取路线站点信息与实时公交位置
 			var routeId
 			var direction
 			$("#routeId").change(function(){
@@ -66,7 +71,16 @@
 				})
 			})
 
-			// 
+			// 根据线路站点id获取等待时间
+			var routeStationId
+			$("#info").change(function(){
+				routeStationId = $(this).val()
+			})		
+			$("button#getWaitTime").click(function(){
+				$.post("/bus/info/waitTime", {routeStationId: routeStationId}, function(data){
+					$("#waitTime").text(data)
+				})
+			})
 		})
 	</script>
 </body>
