@@ -4,102 +4,90 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
 		<title>zhanqh</title>
-		<link rel="stylesheet" href="http://cdn.bootcss.com/weui/0.4.3/style/weui.min.css">
-		<link rel="stylesheet" href="http://cdn.bootcss.com/jquery-weui/0.8.0/css/jquery-weui.min.css">
+		<link rel="stylesheet" href="//cdn.bootcss.com/weui/0.4.3/style/weui.min.css">
+		<link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/0.8.0/css/jquery-weui.min.css">
 		<link rel="stylesheet" href="./css/styles.css">
 	</head>
 	<body ontouchstart="">
 		<div class="header">
 			<div id="bus_route_line1">
-				<span id="bus_route_name">35路</span><span id="bus_route_time">首末班：06:00-22:00</span>
+				<span id="bus_route_name"></span>	<!-- 公交路线名 -->
+				<span id="bus_route_time"></span>	<!-- 首末班时间 -->
 			</div>
 			<div id="bus_route_line2">
-				<span id="bus_route_fromto">大学城(科学中心)总站→文德路总站</span>
+				<span id="bus_route_fromto"></span>
 			</div>
 			<span id="bus_weui_btn"><a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary">返程</a></span>
 		</div>
 		<div class="main">
-			<div class="bus_station"><span>大学城(科学中心)总站</span></div>
-			<div class="bus_mark"><span><img class="bus_icon" src="./images/icon_bus_75.png"></div>
-			<div class="bus_station"><span>广大站</span></div>
+<!-- 			<div><span>大学城(科学中心)总站</span></div>
+			<div class="bus_mark"><span><img class="bus_icon" src="../images/icon_bus_75.png"></div>
+			<div><span>广大站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>广大公寓站</span></div>
+			<div><span>广大公寓站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>广大生活区站</span></div>
-			<div class="bus_mark"><span><img class="bus_icon" src="./images/icon_bus_75.png"></span></div>
-			<div class="bus_station"><span>广大站</span></div>
+			<div><span>广大生活区站</span></div>
+			<div class="bus_mark"><span><img class="bus_icon" src="../images/icon_bus_75.png"></span></div>
+			<div><span>广大站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>中部枢纽站</span></div>
+			<div><span>中部枢纽站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>北亭村大街站</span></div>
+			<div><span>北亭村大街站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><!-- <img class="transparent_bus" src="./images/icon_bus_transparent.png"><img class="transparent_bus" src="./images/icon_bus_transparent.png"> --><span id="station7">小洲路东站</span><!-- <img class="bus_icon_in" src="./images/icon_bus_75.png"><img class="bus_icon_in" src="./images/icon_bus_75.png"></div> -->
+			<div><img class="transparent_bus" src="../images/icon_bus_transparent.png"><img class="transparent_bus" src="../images/icon_bus_transparent.png"><span>小洲路东站</span><img class="bus_icon_in" src="../images/icon_bus_75.png"><img class="bus_icon_in" src="../images/icon_bus_75.png"></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><!-- <img class="icon_nav" src="./images/icon_nav_60.png"> --><span class="bus_selected" id="before_test">瀛洲生态公园站</span><!-- <img class="icon_nav" src="./images/icon_nav_transparent.png"> --></div>
+			<div><img class="icon_nav" src="../images/icon_nav_60.png"><span class="bus_selected">瀛洲生态公园站</span><img class="icon_nav" src="../images/icon_nav_transparent.png"></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>小洲村口站</span></div>
+			<div><span>小洲村口站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>瀛洲路站</span></div>
+			<div><span>瀛洲路站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>瀛洲路口站</span></div>
+			<div><span>瀛洲路口站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>救捞局站</span></div>
+			<div><span>救捞局站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>大沙村东站</span></div>
+			<div><span>大沙村东站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>大沙村站</span></div>
+			<div><span>大沙村站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>轮修厂站</span></div>
+			<div><span>轮修厂站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>少教所站</span></div>
+			<div><span>少教所站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>后滘村站</span></div>
+			<div><span>后滘村站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>沥滘站</span></div>
+			<div><span>沥滘站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>三滘村站</span></div>
+			<div><span>三滘村站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>海珠客运站</span></div>
+			<div><span>海珠客运站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>南洲路口站</span></div>
+			<div><span>南洲路口站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>晓港湾站</span></div>
+			<div><span>晓港湾站</span></div>
 			<div class="bus_mark"></div>
-			<div class="bus_station"><span>瑞南新村站</span></div>
-			<div class="bus_mark"></div>
+			<div><span>瑞南新村站</span></div>
+			<div class="bus_mark"></div> -->
 		</div>
 		<div class="footer">
 			<div id="bus_container">
 				<!-- <span>轻触站点获取等待信息</span> -->
 				<div id="bus_wait">
-					<span class="bus_wait_info"><span class="bus_wait_time">2′</span><span class="bus_wait_stations">1站</span></span>
-					<span class="bus_wait_info"><span class="bus_wait_time">2′</span><span class="bus_wait_stations">1站</span></span>
-					<span class="bus_wait_info"><span class="bus_wait_time">11′</span><span class="bus_wait_stations">5站</span></span>
+					<span class="bus_wait_info"><span class="bus_wait_time" id="bus_wait_time0"></span><span class="bus_wait_stations" id="bus_wait_stations0"></span></span>
+					<span class="bus_wait_info"><span class="bus_wait_time" id="bus_wait_time1"></span><span class="bus_wait_stations" id="bus_wait_stations1"></span></span>
+					<span class="bus_wait_info"><span class="bus_wait_time" id="bus_wait_time2"></span><span class="bus_wait_stations" id="bus_wait_stations2"></span></span>
 				</div>
+				<!-- <div id="bus_wait">
+					<span class="bus_wait_info"><span class="bus_wait_time" id="bus_wait_time0">2′</span><span class="bus_wait_stations" id="bus_wait_stations0">1站</span></span>
+					<span class="bus_wait_info"><span class="bus_wait_time" id="bus_wait_time1">2′</span><span class="bus_wait_stations" id="bus_wait_stations1">1站</span></span>
+					<span class="bus_wait_info"><span class="bus_wait_time" id="bus_wait_time2">11′</span><span class="bus_wait_stations" id="bus_wait_stations2">5站</span></span>
+				</div> -->
 			</div>
-			<div id="bus_reload"><img src="./images/icon_bus_reload.png" id="reload_icon"></div>
+			<div id="bus_reload"><img src="../images/icon_bus_reload.png" id="reload_icon"></div>
 		</div>
-		<style>
-			#before_test:before{
-				content: '';
-				background-image: url(./images/icon_nav_75.png);
-				background-size: 25px 25px;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-				transform: translateX(-25px);
-			}
-			#station7:after{
-				content: '';
-				background-image: url(./images/icon_bus_75.png);
-				background-size: 25px 25px;
-				position: absolute;
-				width: 25px;
-				height: 25px;
-			}
-		</style>
-		<script src="http://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
-		<script src="http://cdn.bootcss.com/jquery-weui/0.8.0/js/jquery-weui.min.js"></script>
-		<!--<script src="./js/bus.js"></script>-->
+
+		<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+		<script src="//cdn.bootcss.com/jquery-weui/0.8.0/js/jquery-weui.min.js"></script>
+		<script src="./js/bus.js"></script>
 	</body>
 </html>
