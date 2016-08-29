@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+		<title>zhanqh</title>
+		<link rel="stylesheet" href="//cdn.bootcss.com/weui/0.4.3/style/weui.min.css">
+		<link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/0.8.0/css/jquery-weui.min.css">
+		<link rel="stylesheet" href="/css/bus_index_styles.css">
+	</head>
+	<body ontouchstart="">
+		<div class="header">
+			<div id="bus_route_line1">
+				<span id="bus_route_name"><!-- 公交路线名 --></span>
+				<span id="bus_route_time"><!-- 首末班时间 --></span>
+			</div>
+			<div id="bus_route_line2">
+				<span id="bus_route_fromto"><!-- 起始站点 --></span>
+			</div>
+			<span id="bus_weui_btn"><a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary">返程</a></span>
+		</div>
+		<div class="main">
+			<!-- 插入公交路线站点名称 -->
+			<div class="bus_station"><span id="station0" data-sid="268447">大学城(科学中心)总站</span></div>
+			<div id="mark0" class="bus_mark"></div>
+			<div class="bus_station"><span id="station1" data-sid="268467">广大站</span></div>
+			<div id="mark1" class="bus_mark"><img class="bus_icon" src="../images/icon_bus.png" /></div>
+			<div class="bus_station"><span id="station2" data-sid="268468">广大公寓站</span></div>
+			<div id="mark2" class="bus_mark"></div>
+			<div class="bus_station"><span id="station3" data-sid="268469">广大生活区站</span></div>
+			<div id="mark3" class="bus_mark"></div>
+			<div class="bus_station"><span id="station4" data-sid="268487">广大站</span></div>
+			<div id="mark4" class="bus_mark"></div>
+			<div class="bus_station"><span id="station5" data-sid="268488">中部枢纽站</span></div>
+			<div id="mark5" class="bus_mark"></div>
+			<div class="bus_station"><span id="station6" data-sid="268489">北亭村大街站</span></div>
+			<div id="mark6" class="bus_mark"><img class="bus_icon" src="../images/icon_bus.png" /></div>
+			<div class="bus_station"><span id="station7" data-sid="273747">小洲路东站</span></div>
+			<div id="mark7" class="bus_mark"></div>
+			<div class="bus_station"><span id="station8" data-sid="203788">瀛洲生态公园站</span></div>
+			<div id="mark8" class="bus_mark"></div>
+			<div class="bus_station"><span id="station9" data-sid="203807">小洲村口站</span></div>
+			<div id="mark9" class="bus_mark"></div>
+			<div class="bus_station"><span id="station10" data-sid="203789">瀛洲路站</span></div>
+			<div id="mark10" class="bus_mark"></div>
+			<div class="bus_station"><span id="station11" data-sid="203790">瀛洲路口站</span></div>
+			<div id="mark11" class="bus_mark"></div>
+			<div class="bus_station"><span id="station12" data-sid="203791">救捞局站</span></div>
+			<div id="mark12" class="bus_mark"></div>
+			<div class="bus_station"><span id="station13" data-sid="203792">大沙村东站</span></div>
+			<div id="mark13" class="bus_mark"></div>
+			<div class="bus_station"><span id="station14" data-sid="203793">大沙村站</span></div>
+			<div id="mark14" class="bus_mark"></div>
+			<div class="bus_station"><span id="station15" data-sid="203794">轮修厂站</span></div>
+			<div id="mark15" class="bus_mark"><img class="bus_icon" src="../images/icon_bus.png" /></div>
+			<div class="bus_station"><span id="station16" data-sid="203795">少教所站</span></div>
+			<div id="mark16" class="bus_mark"></div>
+			<div class="bus_station"><span id="station17" data-sid="203808">后滘村站</span></div>
+			<div id="mark17" class="bus_mark"></div>
+			<div class="bus_station"><span id="station18" data-sid="203796">沥滘站</span></div>
+			<div id="mark18" class="bus_mark"></div>
+			<div class="bus_station"><span id="station19" data-sid="203809">三滘村站</span></div>
+			<div id="mark19" class="bus_mark"></div>
+			<div class="bus_station"><span id="station20" data-sid="203797">海珠客运站</span></div>
+			<div id="mark20" class="bus_mark"></div>
+			<div class="bus_station"><span id="station21" data-sid="203810">南洲路口站</span></div>
+			<div id="mark21" class="bus_mark"></div>
+			<div class="bus_station"><span id="station22" data-sid="203811">晓港湾站</span></div>
+			<div id="mark22" class="bus_mark"></div>
+			<div class="bus_station"><span id="station23" data-sid="203798">瑞南新村站</span></div>
+			<div id="mark23" class="bus_mark"></div>
+			<div class="bus_station"><span id="station24" data-sid="203799">五凤乡站</span></div>
+			<div id="mark24" class="bus_mark"></div>
+			<div class="bus_station"><span id="station25" data-sid="203812">沙溪站</span></div>
+			<div id="mark25" class="bus_mark"></div>
+			<div class="bus_station"><span id="station26" data-sid="203813">九十七中学站</span></div>
+			<div id="mark26" class="bus_mark"></div>
+			<div class="bus_station"><span id="station27" data-sid="203800">晓港中马路站</span></div>
+			<div id="mark27" class="bus_mark"></div>
+			<div class="bus_station"><span id="station28" data-sid="203801">海印桥南站</span></div>
+			<div id="mark28" class="bus_mark"><img class="bus_icon" src="../images/icon_bus.png" /></div>
+			<div class="bus_station"><span id="station29" data-sid="203814">大沙头游船码头站</span></div>
+			<div id="mark29" class="bus_mark"></div>
+			<div class="bus_station"><span id="station30" data-sid="203802">星之光电器城站</span></div>
+			<div id="mark30" class="bus_mark"></div>
+			<div class="bus_station"><span id="station31" data-sid="203815">白云路东站</span></div>
+			<div id="mark31" class="bus_mark"></div>
+			<div class="bus_station"><span id="station32" data-sid="203816">白云路站</span></div>
+			<div id="mark32" class="bus_mark"></div>
+			<div class="bus_station"><span id="station33" data-sid="203803">越秀南路站</span></div>
+			<div id="mark33" class="bus_mark"></div>
+			<div class="bus_station"><span id="station34" data-sid="203804">万福东站</span></div>
+			<div id="mark34" class="bus_mark"></div>
+			<div class="bus_station"><span id="station35" data-sid="203805">万福路站</span></div>
+			<div id="mark35" class="bus_mark"></div>
+			<div class="bus_station"><span id="station36" data-sid="203817">文德路总站</span></div>
+			<div id="mark36" class="bus_mark"></div>
+		</div>
+		<div class="footer">
+			<div id="bus_container">
+				<!-- <span>轻触站点获取等待信息</span> -->
+				<div id="bus_wait">
+					<span class="bus_wait_info"><span class="bus_wait_time" id="bus_wait_time0"><!-- 等待时间 --></span><span class="bus_wait_stations" id="bus_wait_stations0"><!-- 等待站数 --></span></span>
+					<span class="bus_wait_info"><span class="bus_wait_time" id="bus_wait_time1"><!-- 等待时间 --></span><span class="bus_wait_stations" id="bus_wait_stations1"><!-- 等待站数 --></span></span>
+					<span class="bus_wait_info"><span class="bus_wait_time" id="bus_wait_time2"><!-- 等待时间 --></span><span class="bus_wait_stations" id="bus_wait_stations2"><!-- 等待站数 --></span></span>
+				</div>
+			</div>
+			<div id="bus_reload"><img src="../images/icon_bus_reload.png" id="reload_icon"></div>
+		</div>
+
+		<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+		<script src="//cdn.bootcss.com/jquery-weui/0.8.0/js/jquery-weui.min.js"></script>
+		<script src="./js/bus.js"></script>
+	</body>
+</html>
