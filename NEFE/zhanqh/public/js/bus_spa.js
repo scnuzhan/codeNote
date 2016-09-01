@@ -9,7 +9,6 @@ $(function(){
 	// console.log("测试"+routeId)
 	var direction = 0
 	$("#mainContainer").empty()
-	// $(".main").append('<div id="mainContainer"></div>')
 	$.post("/bus/routeStation/getByRouteIdAndDirection", {routeId: routeId, direction: direction}, function(data){
 		var obj=JSON.parse(JSON.parse(data))	// JSON字符串中含有转义字符串，需调用两次JSON.parse()
 		// console.log(obj)
@@ -41,13 +40,23 @@ $(function(){
 		var dbl=[]		// 进站短线公交
 		$.each(obj.retData, function(index, item) {
 			if((item.bbl).length) {											// 判断当前位置是否存在公交
-				((item.bbl)[0].t == 1)?bbl.push(index):dbbl.push(index)		// t=1正常班次，t=2短线；将站点序号分别放入未进站正常公交数组bbl、短线公交数组dbbl
+				if ((item.bbl)[0].t == 1) {
+					bbl.push(index)
+				} else{
+					dbbl.push(index)
+				}
+				// ((item.bbl)[0].t == 1)?bbl.push(index):dbbl.push(index)		// t=1正常班次，t=2短线；将站点序号分别放入未进站正常公交数组bbl、短线公交数组dbbl
 				if((item.bbl).length>1) {									// length>1则该位置存在2辆及以上公交
 					cbbl[index] = (item.bbl).length
 				}
 			}
 			if ((item.bl).length) {											// 判断当前站点是否存在公交
-				((item.bl)[0].t == 1)?bl.push(index):dbl.push(index);		// t=1正常班次，t=2短线；将站点序号分别放入到站正常公交数组bl、短线公交数组dbl
+				if ((item.bl)[0].t == 1) {
+					bl.push(index)
+				} else{
+					dbl.push(index)
+				}
+				// ((item.bl)[0].t == 1)?bl.push(index):dbl.push(index);		// t=1正常班次，t=2短线；将站点序号分别放入到站正常公交数组bl、短线公交数组dbl
 				if((item.bl).length>1) {									// length>1则该位置存在2辆及以上公交
 					cbl[index] = (item.bl).length
 				}
@@ -84,7 +93,6 @@ $(function(){
 	/* 返程 */
 	$("#bus_weui_btn").click(function(){
 		$("#mainContainer").empty()
-		// $(".main").append('<div id="mainContainer"></div>')
 		$("head style").detach()
 		wait_flag = 0
 		$(".bus_wait_time").text()
