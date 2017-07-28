@@ -97,7 +97,6 @@ parseInt('www')    // NaN
 * `arr.length`：数组长度
 * `arr[index]`：按索引值获取元素
 * `arr.indexOf(searchElement[,fromIndex])`：查找元素的索引值
-* `arr.forEach(callback[,thisArg])`：调用回调函数遍历数组，第二个可选参数为指定this指向，回调函数callback`function callback(item, index, array){}`
 * `arr.reserve()`：倒序数组
 * `arr.sort([compareFunction])`：排序数组
 * `arr.push(element1, ... elementN)`：向数组队尾添加元素
@@ -108,6 +107,7 @@ parseInt('www')    // NaN
 * `arr.slice(begin[,end])`：拷贝数组，[begin, end)，第二个参数缺省时表示从begin拷贝到末尾
 * `arr.concat(value1, ... valueN)`：连接数组
 * `arr.join([separator])`：将数组连接成字符串
+* `arr.forEach(callback[,thisArg])`：调用回调函数遍历数组，第二个可选参数为指定this指向，回调函数callback`function callback(item, index, array){}`
 * `arr.map(callback[,thisArg])`：调用回调函数遍历数组并生成新数组
 * `arr.reduce(callback[,initialValue])`：回调函数callback`function callback(previousResult, item, index, array){}`
 ```
@@ -121,6 +121,7 @@ var sum = function(previousResult,item,index,array){
 };
 students.reduce(sum,0);  // 200
 ```
+* [一张图看懂JavaScript中数组的迭代方法：forEach、map、filter、reduce、every、some](https://www.zhihu.com/question/24927450/answer/77479376)
 
 #### 函数
 * 参数列表数组 `arguments`
